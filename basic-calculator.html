@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
+
+    <link rel="stylesheet" href="calc-style.css">
+    <script src="calc-script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+
+
+        <div class="calc-content">
+            <div> <h4>Basic Calculator</h4>
+            </div>
+
+
+
+            <div class="input-field">
+                <span class="number-display" id="numberDisplay"></span>
+                <span class="operator-display" id="operatorDisplay"></span>
+            </div>
+            <div class="input-btns">
+                <div class="numbers-column">
+
+                    <div>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnSeven">7</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnEight">8</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnNine">9</button>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnFour">4</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnFive">5</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnSix">6</button>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnOne">1</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnTwo">2</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnThree">3</button>
+                    </div>
+
+
+                    <div>
+                        <button type="button" class="btn btn-secondary  input-number" id="btnZero">0</button>
+                        <button type="button" class="btn btn-secondary  input-number" id="decimalBtn">.</button>
+                        <button type="button" class="btn btn-danger clearBtn" id="clrBtn">C</button>
+                    </div>
+                </div>
+
+                <div class="operators-column">
+                    <button type="button" class="btn btn-secondary operators" id="addBtn" >+</button>
+                    <button type="button" class="btn btn-secondary operators" id="subBtn" >-</button>
+                    <button type="button" class="btn btn-secondary operators" id="mulBtn" >*</button>
+                    <button type="button" class="btn btn-secondary operators" id="divBtn" >/</button>
+                </div>
+            </div>
+
+            <div class="eql-btn">
+                <button type="button" class="btn btn-success"  id="eqlBtn">=</button>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</body>
+
+</html>
