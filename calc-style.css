@@ -2,14 +2,14 @@ body {
     background-color: #818181;
 }
 
-h4{
+h4 {
     color: #656565;
+    margin: 0 0.3125rem  1.25rem;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
+    -webkit-appearance: none5}
 
 button {
     display: inline-block;
@@ -20,6 +20,7 @@ button {
 #decimalBtn {
     padding: 0.3125rem 1.375rem !important;
 }
+
 .calc-content {
     width: 25%;
     margin: 3.125rem auto;
@@ -27,31 +28,29 @@ button {
     padding: 20px 0;
 }
 
-
 .number-display {
     display: inline-block;
     width: 80%;
-    margin: 0.625rem 0 0.625rem 0.625rem  !important;
+    margin: 0.625rem 0 0.625rem 0.625rem !important;
     font-size: larger;
     text-align: right;
     padding: 5px 0;
 }
-.operator-display{
+
+.operator-display {
     display: inline-block;
     width: 10%;
-    margin: 0.625rem 0  !important;
+    margin: 0.625rem 0 !important;
     font-size: smaller;
     text-align: center;
     padding: 9px 0;
 }
-
 
 .display-content {
     padding: 2rem 0;
     background-color: #dfdfdf;
     width: 100%;
 }
-
 
 .numbers-column {
     width: 70%;
@@ -68,7 +67,7 @@ button {
 
 .input-btns {
     display: flex;
-    flex-direction: row ;
+    flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
@@ -85,10 +84,9 @@ button {
     box-sizing: border-box;
 }
 
-
-
-.input-field{
+.input-field {
     background-color: #b3b3b3;
     height: 3.125rem;
-    margin-bottom: 1.25rem;
+    width: 95%;
+    margin: 0 auto  1.25rem;
 }
