@@ -7,3 +7,5 @@ JavaScript functions prevents the form from submission -
 - If the email is not valid or don't use either @gmail.com or @yahoo.com
 - If the input containes character or symbols other than specified
 - If age does not meet the requirements
+
+If the inputs are proper, the form is redirected to another page
