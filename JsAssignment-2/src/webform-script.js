@@ -72,7 +72,7 @@ addEventListener('reset', () => {
   }
 });
 
-addEventListener('', () => {
+addEventListener('click', () => {
   for (let i = 0; i < 10; i++) {
     document.getElementsByClassName('span-error')[i].style.display = 'none';
     document.getElementsByName('field')[i].style.backgroundColor = '#fff';
