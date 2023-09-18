@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="webform-style.css">
+    <script src="webform-script.js" defer></script>
+</head>
+
+<body>
+    <div class="container border mt-5" name="divs">
+
+        <div>
+            <h1 class="text-left w-100 pl-3 mt-3">WEB FORM</h1>
+        </div>
+        <hr>
+        <form class="form mx-auto mt-4 mb-1 px-3" name="webForm" id="formOne" action="webform-submitted.html">
+
+            <div class="form-group group">
+
+                <label for="fName">Full Name<span class="text-danger">*</span></label>
+                <input type="text" id="fName" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"></span>
+            </div>
+
+            <div>
+                <label class="mr-5">Gender<span class="text-danger">*</span></label>
+
+                <div class="form-check-inline">
+                    <input type="radio" class="form-check-input " name="gender" id="male">
+                    <label class="form-check-label mr-3 " for="male">Male</label>
+
+                    <input type="radio" class="form-check-input" name="gender" id="female">
+                    <label class="form-check-label mr-5 " for="female">Female</label><br>
+                    <span name="span-buttons-validation" class="span-buttons-validation"></span>
+                </div>
+            </div>
+
+            <div class="form-group group">
+
+                <label for="dateOfBirth">Date of Birth<span class="text-danger">*</span></label>
+                <input type="text" id="dateOfBirth" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"> </span>
+            </div>
+
+            <div class="form-group group">
+
+                <label for="socialSecurityNumber">Social Security Number<span class="text-danger">*</span></label>
+                <input type="text" id="socialSecurityNumber" name="field" class="form-control"><span
+                    class="span-validation" name="span-validation"> </span>
+            </div>
+
+            <div class="form-group group">
+
+                <label for="address">Address<span class="text-danger">*</span></label>
+                <textarea name="field" id="address" cols="30" rows="5" class="form-control"></textarea><span
+                    class="span-validation" name="span-validation"></span>
+            </div>
+
+            <div class="form-group group">
+
+                <label for="phone">Phone<span class="text-danger">*</span></label>
+                <input type="text" id="phone" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"></span>
+            </div>
+
+            <div class="form-group group">
+
+                <label for="mail">Email<span class="text-danger">*</span></label>
+                <input type="text" id="mail" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"> </span>
+            </div>
+
+            <div>
+                <label>Preffered Methodof Communication <span class="text-danger">*</span></label>
+
+                <div class="form-check-inline">
+
+                    <input type="checkbox" name="contacts" class="form-check-input ml-5 " id="contactMail">
+                    <label class="form-check-label contact mr-4" for="contactMail">Email</label>
+
+                    <input type="checkbox" name="contacts" class="form-check-input" id="contactPhone">
+                    <label class="form-check-label contact mr-4" for="contactPhone">Phone</label>
+
+                    <input type="checkbox" name="contacts" class="form-check-input" id="contactPost">
+                    <label class="form-check-label contact mr-4" for="contactPost">Post</label>
+
+                    <input type="checkbox" name="contacts" class="form-check-input" id="contactFax">
+                    <label class="form-check-label contact mr-4" for="contactFax">Fax</label>
+                    <span name="span-buttons-validation" class="span-buttons-validation ml-5"> </span>
+                </div>
+
+            </div>
+
+            <div class="form-group group">
+                <label for="eId">Employee ID<span class="text-danger">*</span></label>
+                <input type="text" id="eId" class="w-25" disabled><br>
+
+            </div>
+
+            <div class="form-group group">
+
+                <label for="jobTitle">Job Title<span class="text-danger">*</span></label>
+                <input type="text" id="jobTitle" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"></span>
+            </div>
+
+            <div class="form-group group">
+                <label for="dept">Department<span class="text-danger">*</span></label>
+
+                <select id="dept" class="form-control">
+                    <option disabled selected value="0">Choose an option</option>
+                    <option>Sales</option>
+                    <option>Marketing</option>
+                    <option>Human Resources</option>
+                    <option>Finance</option>
+                    <option>Engineering</option>
+                    <option>Information Technology (IT)</option>
+                    <option>Customer Support</option>
+                    <option>Design</option>
+                </select>
+                <span name="span-buttons-validation" class="span-buttons-validation "></span>
+            </div>
+
+            <div class="form-group group">
+                <label for="salary">Salary<span class="text-danger">*</span></label>
+                <input type="text" id="salary" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"> </span>
+            </div>
+
+            <div class="form-group group">
+                <label for="hobbies">Hobbies<span class="text-danger">*</span></label>
+                <input type="text" id="hobbies" name="field" class="form-control">
+                <span class="span-validation" name="span-validation"></span>
+            </div>
+
+            <div class="form-group group">
+                <label for="notes">Additional Notes</label>
+                <textarea name="field" id="notes" cols="30" rows="5" class="form-control"></textarea>
+                <span class="span-validation" name="span-validation"></span>
+            </div>
+            <span class="text-danger">*</span><em>Mandatory field</em>
+
+            <div class="d-flex justify-content-end">
+                <button type="reset" class="btn btn-white border px-3 mr-2">Clear</button>
+                <button type="submit" class="btn btn-primary px-2" id="submit">Submit</button>
+            </div>
+
+
+        </form>
+
+    </div>
+</body>
+
+</html>
