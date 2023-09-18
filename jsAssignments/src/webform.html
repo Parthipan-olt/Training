@@ -23,19 +23,19 @@
 </head>
 
 <body>
-    <div class="container border mt-5" name="divs">
+    <div class="container border mt-5">
 
         <div>
             <h1 class="text-left w-100 pl-3 mt-3">WEB FORM</h1>
         </div>
         <hr>
-        <form class="form mx-auto mt-4 mb-1 px-3" name="webForm" id="formOne" action="webform-submitted.html">
+        <form class="form mx-auto mt-4 mb-1 px-3" name="webForm" id="webForm" action="submitted.html">
 
             <div class="form-group group">
 
                 <label for="fName">Full Name<span class="text-danger">*</span></label>
                 <input type="text" id="fName" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"></span>
+                <span class="span-error"></span>
             </div>
 
             <div>
@@ -47,43 +47,43 @@
 
                     <input type="radio" class="form-check-input" name="gender" id="female">
                     <label class="form-check-label mr-5 " for="female">Female</label><br>
-                    <span name="span-buttons-validation" class="span-buttons-validation"></span>
+                    <span  class="span-select-error"></span>
                 </div>
             </div>
 
             <div class="form-group group">
 
                 <label for="dateOfBirth">Date of Birth<span class="text-danger">*</span></label>
-                <input type="text" id="dateOfBirth" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"> </span>
+                <input type="text" id="dateOfBirth" name="field" class="form-control" placeholder="YYYY/MM/DD">
+                <span class="span-error"> </span>
             </div>
 
             <div class="form-group group">
 
                 <label for="socialSecurityNumber">Social Security Number<span class="text-danger">*</span></label>
                 <input type="text" id="socialSecurityNumber" name="field" class="form-control"><span
-                    class="span-validation" name="span-validation"> </span>
+                    class="span-error"> </span>
             </div>
 
             <div class="form-group group">
 
                 <label for="address">Address<span class="text-danger">*</span></label>
                 <textarea name="field" id="address" cols="30" rows="5" class="form-control"></textarea><span
-                    class="span-validation" name="span-validation"></span>
+                    class="span-error"></span>
             </div>
 
             <div class="form-group group">
 
                 <label for="phone">Phone<span class="text-danger">*</span></label>
                 <input type="text" id="phone" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"></span>
+                <span class="span-error"></span>
             </div>
 
             <div class="form-group group">
 
                 <label for="mail">Email<span class="text-danger">*</span></label>
                 <input type="text" id="mail" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"> </span>
+                <span class="span-error"> </span>
             </div>
 
             <div>
@@ -102,7 +102,7 @@
 
                     <input type="checkbox" name="contacts" class="form-check-input" id="contactFax">
                     <label class="form-check-label contact mr-4" for="contactFax">Fax</label>
-                    <span name="span-buttons-validation" class="span-buttons-validation ml-5"> </span>
+                    <span  class="span-select-error ml-5"> </span>
                 </div>
 
             </div>
@@ -117,7 +117,7 @@
 
                 <label for="jobTitle">Job Title<span class="text-danger">*</span></label>
                 <input type="text" id="jobTitle" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"></span>
+                <span class="span-error"></span>
             </div>
 
             <div class="form-group group">
@@ -134,25 +134,25 @@
                     <option>Customer Support</option>
                     <option>Design</option>
                 </select>
-                <span name="span-buttons-validation" class="span-buttons-validation "></span>
+                <span  class="span-select-error "></span>
             </div>
 
             <div class="form-group group">
                 <label for="salary">Salary<span class="text-danger">*</span></label>
                 <input type="text" id="salary" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"> </span>
+                <span class="span-error"> </span>
             </div>
 
             <div class="form-group group">
                 <label for="hobbies">Hobbies<span class="text-danger">*</span></label>
                 <input type="text" id="hobbies" name="field" class="form-control">
-                <span class="span-validation" name="span-validation"></span>
+                <span class="span-error"></span>
             </div>
 
             <div class="form-group group">
                 <label for="notes">Additional Notes</label>
                 <textarea name="field" id="notes" cols="30" rows="5" class="form-control"></textarea>
-                <span class="span-validation" name="span-validation"></span>
+                <span class="span-error"></span>
             </div>
             <span class="text-danger">*</span><em>Mandatory field</em>
 
