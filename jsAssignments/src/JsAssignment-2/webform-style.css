@@ -1,0 +1,18 @@
+
+textarea {
+    resize: none;
+}
+
+span {
+    text-align: right;
+    font-size: smaller;
+    color: #ff0000;
+}
+
+.span-select-error,
+.span-error {
+    display: none;
+}
+.group {
+    margin: 30px 0;
+}
