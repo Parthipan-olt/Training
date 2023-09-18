@@ -1,0 +1,3 @@
+JavaScript Assignments 
+2. Basic calculator
+3.Web form
