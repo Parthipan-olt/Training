@@ -1,6 +1,6 @@
-Web form - Using Bootstrap,CSS and JavaScript
+Web form - Using Bootstrap - 4,CSS and JavaScript
 
-BootStrap and CSS are used for styling .The JavaScript validates the input.
+BootStrap - 4 and CSS are used for styling .The JavaScript validates the input.
 JavaScript functions prevents the form from submission -
 - If the mandatory fields are not filled, or selected
 - If the inputs exceeds maximum length of charactors or does not have the minimum length
