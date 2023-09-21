@@ -1,47 +1,18 @@
-/* eslint-disable prefer-destructuring */
 /* eslint-disable func-style */
-/* eslint-disable eol-last */
-
-let fullName;
-
-let dateOfBirth;
-
-let socialSecurityNumber;
-
-let address;
-
-let phoneNumber;
-
-let eMail;
-
-let contact;
-
-let eId;
-
-let jobTitle;
-
-let salary;
-
-let hobbies;
-
-let notes;
-
-const form = document.getElementById('webForm');
+const fullName = document.getElementById('fName');
+const dateOfBirth = document.getElementById('dateOfBirth');
+const socialSecurityNumber = document.getElementById('socialSecurityNumber');
+const address = document.getElementById('address');
+const phoneNumber = document.getElementById('phone');
+const eMail = document.getElementById('mail');
+const contacts = document.getElementsByName('contacts');
+const eId = document.getElementById('eId');
+const jobTitle = document.getElementById('jobTitle');
+const salary = document.getElementById('salary');
+const hobbies = document.getElementById('hobbies');
+const notes = document.getElementById('notes');
 
 generateRandom();
-
-function getValues() {
-  fullName = document.getElementById('fName');
-  dateOfBirth = document.getElementById('dateOfBirth');
-  socialSecurityNumber = document.getElementById('socialSecurityNumber');
-  address = document.getElementById('address');
-  phoneNumber = document.getElementById('phone');
-  eMail = document.getElementById('mail');
-  jobTitle = document.getElementById('jobTitle');
-  salary = document.getElementById('salary');
-  hobbies = document.getElementById('hobbies');
-  notes = document.getElementById('notes');
-}
 
 addEventListener('submit', () => {
   validate();
@@ -53,12 +24,12 @@ addEventListener('submit', () => {
   }
 });
 
-document.getElementById('salary').addEventListener('click', () => {
-  document.getElementById('salary').value = '';
+salary.addEventListener('click', () => {
+  salary.value = '';
 });
 
-document.getElementById('dateOfBirth').addEventListener('click', () => {
-  document.getElementById('dateOfBirth').value = '';
+dateOfBirth.addEventListener('click', () => {
+  dateOfBirth.value = '';
 });
 
 addEventListener('reset', () => {
@@ -76,7 +47,6 @@ addEventListener('click', () => {
   for (let i = 0; i < 10; i++) {
     document.getElementsByClassName('span-error')[i].style.display = 'none';
     document.getElementsByName('field')[i].style.backgroundColor = '#fff';
-    document.getElementsByName('field')[i].value = '';
   }
 
   for (let i = 0; i < 3; i++) {
@@ -85,7 +55,6 @@ addEventListener('click', () => {
 });
 
 function validate() {
-  getValues();
   isGmailOrYahoo();
   isLength();
   checkAllowedInputs();
@@ -111,13 +80,13 @@ function isRequired() {
 // convert salary from integer to decimal
 
 function salToDecimal() {
-  const salaryValue = document.getElementById('salary').value;
+  const salaryValue = salary.value;
 
   if (salaryValue != '') {
     const decimalSalary = parseFloat(salaryValue);
 
     if (!isNaN(decimalSalary)) {
-      document.getElementById('salary').value = decimalSalary.toFixed(2);
+      salary.value = decimalSalary.toFixed(2);
     }
   }
 }
@@ -186,7 +155,7 @@ function getRadioValue() {
 // check if the check buttons are checked or not
 
 function getCheckedValue() {
-  const checkboxes = document.getElementsByName('contacts');
+  const checkboxes = contacts;
 
   const checkboxesChecked = [];
 
@@ -197,7 +166,6 @@ function getCheckedValue() {
   }
 
   if (checkboxesChecked == '') {
-    console.log(checkboxesChecked);
     document.getElementsByClassName('span-select-error')[1].style.display = 'block';
     document.getElementsByClassName('span-select-error')[1].innerHTML = 'Required';
     isValid = false;
@@ -225,13 +193,13 @@ function selectbox() {
 function generateRandom() {
   const eIdRandom = Math.round(Math.random() * (10 - 1) + 1);
 
-  document.getElementById('eId').value = eIdRandom;
+  eId.value = eIdRandom;
 }
 
 // check if the email is valid or not
 
 function isGmailOrYahoo() {
-  const mail = document.getElementById('mail').value.trim();
+  const mail = eMail.value.trim();
   const res = /^[a-zA-Z]$/;
 
   first = mail.charAt(0);
@@ -328,22 +296,22 @@ function checkAllowedInputs() {
 }
 
 function dateFormat() {
-  if (!document.getElementById('dateOfBirth').value == '') {
-    const date = new Date(document.getElementById('dateOfBirth').value);
+  if (!dateOfBirth.value == '') {
+    const date = new Date(dateOfBirth.value);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    document.getElementById('dateOfBirth').value = `${year}/${month}/${day}`;
+    dateOfBirth.value = `${year}/${month}/${day}`;
   }
 }
 
-document.getElementById('dateOfBirth').addEventListener('blur', () => {
+dateOfBirth.addEventListener('blur', () => {
   dateFormat();
 });
 
 function isDateValid() {
-  const birth = new Date(document.getElementById('dateOfBirth').value.trim());
+  const birth = new Date(dateOfBirth.value.trim());
   const birthYear = birth.getFullYear();
   const current = new Date();
   const currentYear = current.getFullYear();
