@@ -23,6 +23,8 @@ addEventListener('submit', (e) => {
   if (isValid == false) {
     e.preventDefault();
     return false;
+  } else {
+    return true;
   }
 });
 
@@ -282,11 +284,8 @@ function checkRepeat(inputString, index) {
   if (characters.some(substring => inputString.includes(substring))) {
     console.log('....')
     document.querySelectorAll('.valid-input')[index].style.display = 'block';
-<<<<<<< HEAD
     document.querySelectorAll('.valid-input')[index].innerHTML = 'Please Enter a Valid Input';
-=======
     document.querySelectorAll('.valid-input')[index].innerHTML = 'Not Valid';
->>>>>>> 181baf9fe4a12317b0f42f9eed2bc5ad8984b3e8
     isValid = false;
     return;
   } else {
