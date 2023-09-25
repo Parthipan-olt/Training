@@ -23,6 +23,8 @@ addEventListener('submit', (e) => {
   if (isValid == false) {
     e.preventDefault();
     return false;
+  } else {
+    return true;
   }
 });
 
@@ -282,6 +284,7 @@ function checkRepeat(inputString, index) {
   if (characters.some(substring => inputString.includes(substring))) {
     console.log('....')
     document.querySelectorAll('.valid-input')[index].style.display = 'block';
+    document.querySelectorAll('.valid-input')[index].innerHTML = 'Please Enter a Valid Input';
     document.querySelectorAll('.valid-input')[index].innerHTML = 'Not Valid';
     isValid = false;
     return;
