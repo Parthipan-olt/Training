@@ -38,9 +38,6 @@ salary.addEventListener('click', (e) => {
   e.target.value = '';
 });
 
-dateOfBirth.addEventListener('click', (e) => {
-  e.target.value = '';
-});
 
 salary.addEventListener('focusout', (e) => {
   salToDecimal();
