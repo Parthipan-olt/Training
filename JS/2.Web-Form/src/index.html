@@ -33,8 +33,8 @@
 
             <div class="form-group group">
                 <label for="fName">Full Name<span class="text-danger">*</span></label>
-                <input type="text" id="fName" name="field" class="form-control">
-                <span class="span-error"></span>
+                <input type="text" id="fName" class="form-control field">
+                <span class="span-error valid-input"></span>
             </div>
 
             <div>
@@ -52,31 +52,32 @@
 
             <div class="form-group group">
                 <label for="dateOfBirth">Date of Birth<span class="text-danger">*</span></label>
-                <input type="text" id="dateOfBirth" name="field" class="form-control" placeholder="YYYY/MM/DD">
+                <input type="text" id="dateOfBirth" class="form-control field" placeholder="YYYY/MM/DD">
+                <input type="date" id="textToDate" class="form-control field" placeholder="YYYY/MM/DD">
                 <span class="span-error"> </span>
             </div>
 
             <div class="form-group group">
                 <label for="socialSecurityNumber">Social Security Number<span class="text-danger">*</span></label>
-                <input type="text" id="socialSecurityNumber" name="field" class="form-control"><span class="span-error">
+                <input type="text" id="socialSecurityNumber" class="form-control field"><span class="span-error valid-input">
                 </span>
             </div>
 
             <div class="form-group group">
                 <label for="address">Address<span class="text-danger">*</span></label>
-                <textarea name="field" id="address" cols="30" rows="5" class="form-control"></textarea><span
-                    class="span-error"></span>
+                <textarea id="address" cols="30" rows="5" class="form-control field"></textarea><span
+                    class="span-error valid-input"></span>
             </div>
 
             <div class="form-group group">
                 <label for="phone">Phone<span class="text-danger">*</span></label>
-                <input type="text" id="phone" name="field" class="form-control">
+                <input type="text" id="phone" class="form-control field">
                 <span class="span-error"></span>
             </div>
 
             <div class="form-group group">
                 <label for="mail">Email<span class="text-danger">*</span></label>
-                <input type="text" id="mail" name="field" class="form-control">
+                <input type="text" id="mail" class="form-control field">
                 <span class="span-error"> </span>
             </div>
 
@@ -85,17 +86,17 @@
 
                 <div class="form-check-inline">
 
-                    <input type="checkbox" name="contacts" class="form-check-input ml-5 " id="contactMail">
-                    <label class="form-check-label contact mr-4" for="contactMail">Email</label>
+                    <input type="checkbox"  class="form-check-input ml-5 contacts" id="contactMail">
+                    <label class="form-check-label  mr-4" for="contactMail">Email</label>
 
-                    <input type="checkbox" name="contacts" class="form-check-input" id="contactPhone">
-                    <label class="form-check-label contact mr-4" for="contactPhone">Phone</label>
+                    <input type="checkbox" class="form-check-input contacts" id="contactPhone">
+                    <label class="form-check-label  mr-4" for="contactPhone">Phone</label>
 
-                    <input type="checkbox" name="contacts" class="form-check-input" id="contactPost">
-                    <label class="form-check-label contact mr-4" for="contactPost">Post</label>
+                    <input type="checkbox"  class="form-check-input contacts" id="contactPost">
+                    <label class="form-check-label mr-4" for="contactPost">Post</label>
 
-                    <input type="checkbox" name="contacts" class="form-check-input" id="contactFax">
-                    <label class="form-check-label contact mr-4" for="contactFax">Fax</label>
+                    <input type="checkbox" class="form-check-input contacts" id="contactFax">
+                    <label class="form-check-label  mr-4" for="contactFax">Fax</label>
                     <span class="span-select-error ml-5"> </span>
                 </div>
             </div>
@@ -108,8 +109,8 @@
             <div class="form-group group">
 
                 <label for="jobTitle">Job Title<span class="text-danger">*</span></label>
-                <input type="text" id="jobTitle" name="field" class="form-control">
-                <span class="span-error"></span>
+                <input type="text" id="jobTitle" class="form-control field">
+                <span class="span-error valid-input"></span>
             </div>
 
             <div class="form-group group">
@@ -132,20 +133,20 @@
 
             <div class="form-group group">
                 <label for="salary">Salary<span class="text-danger">*</span></label>
-                <input type="text" id="salary" name="field" class="form-control">
+                <input type="text" id="salary" class="form-control field">
                 <span class="span-error"> </span>
             </div>
 
             <div class="form-group group">
                 <label for="hobbies">Hobbies<span class="text-danger">*</span></label>
-                <input type="text" id="hobbies" name="field" class="form-control">
-                <span class="span-error"></span>
+                <input type="text" id="hobbies" class="form-control field">
+                <span class="span-error valid-input"></span>
             </div>
 
             <div class="form-group group">
                 <label for="notes">Additional Notes</label>
-                <textarea name="field" id="notes" cols="30" rows="5" class="form-control"></textarea>
-                <span class="span-error"></span>
+                <textarea id="notes" cols="30" rows="5" class="form-control field"></textarea>
+                <span class="span-error valid-input"></span>
             </div>
 
             <span class="text-danger">*</span><em>Mandatory field</em>
