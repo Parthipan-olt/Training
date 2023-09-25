@@ -16,26 +16,19 @@ let isValid = true;
 
 generateRandom();
 
-addEventListener('submit', (e) => {
+document.addEventListener('submit', (e) => {
   trimSalary(salary.value, '.');
   validate();
-  scrollToTop();
-  console.log(dateOfBirth.value)
-  if (isValid == false) {
+  if (isValid === false) {
+    scrolling();
     e.preventDefault();
-   
-    return false;
-  } else {
-    return true;
   }
 });
 
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+function scrolling() {
+  window.scrollTo({top:0,behavior:'smooth'})
 }
+
 
 inputFields.forEach((inputFields, index) => {
   addEventListener('input', (e) => {
@@ -56,7 +49,7 @@ addEventListener('reset', (e) => {
   clearOnClick();
 });
 
-addEventListener('click', (e) => {
+addEventListener('beforeinput', (e) => {
   clearOnClick();
 });
 
