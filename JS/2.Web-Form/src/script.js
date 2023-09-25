@@ -22,11 +22,19 @@ addEventListener('submit', (e) => {
   console.log(dateOfBirth.value)
   if (isValid == false) {
     e.preventDefault();
+    scrollToTop();
     return false;
   } else {
     return true;
   }
 });
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 
 inputFields.forEach((inputFields, index) => {
   addEventListener('input', (e) => {
