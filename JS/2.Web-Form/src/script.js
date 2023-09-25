@@ -20,17 +20,9 @@ document.addEventListener('submit', (e) => {
   trimSalary(salary.value, '.');
   validate();
   if (isValid === false) {
-    scrolling();
     e.preventDefault();
   }
 });
-
-function scrolling() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-}
 
 
 inputFields.forEach((inputFields, index) => {
