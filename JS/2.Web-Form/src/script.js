@@ -19,10 +19,11 @@ generateRandom();
 addEventListener('submit', (e) => {
   trimSalary(salary.value, '.');
   validate();
+  scrollToTop();
   console.log(dateOfBirth.value)
   if (isValid == false) {
     e.preventDefault();
-    scrollToTop();
+   
     return false;
   } else {
     return true;
