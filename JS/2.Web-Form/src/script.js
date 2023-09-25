@@ -24,7 +24,6 @@ document.addEventListener('submit', (e) => {
   }
 });
 
-
 inputFields.forEach((inputFields, index) => {
   addEventListener('input', (e) => {
     checkRepeat(inputFields.value, index);
@@ -34,7 +33,6 @@ inputFields.forEach((inputFields, index) => {
 salary.addEventListener('click', (e) => {
   e.target.value = '';
 });
-
 
 salary.addEventListener('focusout', (e) => {
   salToDecimal();
