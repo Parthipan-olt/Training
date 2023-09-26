@@ -15,9 +15,7 @@ const notes = document.querySelector('#notes');
 const select = document.querySelector('#dept');
 const inputFields = [fullName, socialSecurityNumber, address, jobTitle, hobbies, notes]
 let isValid = true;
-
-
-const salaryInteger = [0];
+const salaryInteger = [];
 
 generateRandom();
 
