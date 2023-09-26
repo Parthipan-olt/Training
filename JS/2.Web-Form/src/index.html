@@ -58,7 +58,8 @@
 
             <div class="form-group group">
                 <label for="socialSecurityNumber">Social Security Number<span class="text-danger">*</span></label>
-                <input type="text" id="socialSecurityNumber" class="form-control field"><span class="span-error valid-input">
+                <input type="text" id="socialSecurityNumber" class="form-control field"><span
+                    class="span-error valid-input">
                 </span>
             </div>
 
@@ -81,17 +82,17 @@
             </div>
 
             <div>
-                <label>Preffered Methodof Communication <span class="text-danger">*</span></label>
+                <label>Preferred Method of Communication <span class="text-danger">*</span></label>
 
                 <div class="form-check-inline">
 
-                    <input type="checkbox"  class="form-check-input ml-5 contacts" id="contactMail">
+                    <input type="checkbox" class="form-check-input ml-5 contacts" id="contactMail">
                     <label class="form-check-label  mr-4" for="contactMail">Email</label>
 
                     <input type="checkbox" class="form-check-input contacts" id="contactPhone">
                     <label class="form-check-label  mr-4" for="contactPhone">Phone</label>
 
-                    <input type="checkbox"  class="form-check-input contacts" id="contactPost">
+                    <input type="checkbox" class="form-check-input contacts" id="contactPost">
                     <label class="form-check-label mr-4" for="contactPost">Post</label>
 
                     <input type="checkbox" class="form-check-input contacts" id="contactFax">
@@ -132,7 +133,7 @@
 
             <div class="form-group group">
                 <label for="salary">Salary<span class="text-danger">*</span></label>
-                <input type="text" id="salary" class="form-control field">
+                <input type="text" id="salary" class="form-control field" onfocusout="salToDecimal()">
                 <span class="span-error"> </span>
             </div>
 
@@ -150,9 +151,9 @@
 
             <span class="text-danger">*</span><em>Mandatory field</em>
 
-            <div class="d-flex justify-content-end">
-                <button type="reset" class="btn btn-white border px-3 mr-2">Clear</button>
-                <button type="submit" class="btn btn-primary px-2" id="submit">Submit</button>
+            <div class="d-flex justify-content-end mb-4">
+                <button type="button" class="btn btn-white border px-3 mr-2 " onclick="resetField()">Clear</button>
+                <button type="submit" class="btn btn-primary px-2 " id="submit">Submit</button>
             </div>
 
         </form>

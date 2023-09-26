@@ -1,5 +1,6 @@
 /* eslint-disable func-style */
 const fullName = document.querySelector('#fName');
+const radios = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
 const socialSecurityNumber = document.querySelector('#socialSecurityNumber');
 const address = document.querySelector('#address');
@@ -11,40 +12,36 @@ const jobTitle = document.querySelector('#jobTitle');
 const salary = document.querySelector('#salary');
 const hobbies = document.querySelector('#hobbies');
 const notes = document.querySelector('#notes');
+const select = document.querySelector('#dept');
 const inputFields = [fullName, socialSecurityNumber, address, jobTitle, hobbies, notes]
 let isValid = true;
 
+
+const salaryInteger = [0];
+
 generateRandom();
 
+
 document.addEventListener('submit', (e) => {
-  trimSalary(salary.value, '.');
   validate();
+  e.preventDefault();
+  checkSalary();
   if (isValid === false) {
     e.preventDefault();
+    validate();
   }
 });
 
 inputFields.forEach((inputFields, index) => {
   addEventListener('input', (e) => {
-    checkRepeat(inputFields.value, index);
+    checkRepeat(inputFields, index);
   });
 });
 
-salary.addEventListener('click', (e) => {
-  e.target.value = '';
-});
 
-salary.addEventListener('focusout', (e) => {
-  salToDecimal();
-});
 
-addEventListener('reset', (e) => {
-  clearOnClick();
-});
-
-addEventListener('beforeinput', (e) => {
-  clearOnClick();
-});
+addEventListener('beforeinput', clearOnClick);
+addEventListener('click', clearOnClick);
 
 function clearOnClick() {
   for (let i = 0; i < 10; i++) {
@@ -55,6 +52,27 @@ function clearOnClick() {
   for (let i = 0; i < 3; i++) {
     document.querySelectorAll('.span-select-error')[i].style.display = 'none';
   }
+}
+
+function clearSalaryField() {
+  salary.value = '';
+}
+
+function resetField() {
+  clearOnClick();
+
+  for (let i = 0; i < 10; i++) {
+    document.querySelectorAll('.field')[i].value = null;
+  }
+  checkboxes.forEach(function (checkbox) {
+    checkbox.checked = false;
+  });
+
+  radios.forEach(function (radio) {
+    radio.checked = false;
+  });
+
+  select.selectedIndex = 0;
 }
 
 function validate() {
@@ -81,14 +99,16 @@ function isRequired() {
 }
 
 function salToDecimal() {
-  const salaryValue = salary.value;
+  const numbersOnly = /^[0-9]*$/;
 
-  if (salaryValue != '') {
-    const decimalSalary = parseFloat(salaryValue);
-    console.log(decimalSalary.toFixed(2))
-    if (!isNaN(decimalSalary)) {
-      salary.value = decimalSalary.toFixed(2);
-    }
+  const joined = [1, 2];
+
+  salaryInteger[0] = salary.value;
+  salaryInteger[1] = salary.value;
+  salaryInteger[2] = '00';
+
+  if (salary.value !== '' && salary.value.match(numbersOnly) && salary.value.length <= 10) {
+    salary.value = joined.map(index => salaryInteger[index]).join('.');
   }
 }
 
@@ -114,39 +134,44 @@ function isEmpty(fields, i) {
   }
 }
 
-function checkLength(field, min, max, index) {
-  let inputLength = 0;
-  if (index == 7) {
-    field = parseInt(field.value);
-    inputLength = field.toString().length;
+function checkLength(fields, min, max, index) {
+  let field = fields.value.trim()
+  let inputLength = field.length;
 
-  } else {
-    field = field.value.trim();
-    inputLength = field.length;
+  if (fields == salaryInteger) {
+    inputLength = salaryInteger[0].length;
   }
 
   if (inputLength < min && inputLength != 0) {
     document.querySelectorAll('.span-error')[index].style.display = 'block';
     document.querySelectorAll('.span-error')[index].innerHTML = `Minimum length is ${min}`;
     isValid = false;
+    fields.style.backgroundColor = '#FF000015';
   }
 
   if (inputLength > max) {
     document.querySelectorAll('.span-error')[index].style.display = 'block';
     document.querySelectorAll('.span-error')[index].innerHTML = `Maximum length is ${max}`;
     isValid = false;
+    fields.style.backgroundColor = '#FF000015';
   }
 }
 
 function getRadioValue() {
-  const radios = document.getElementsByName('gender');
+  const errorSpan = document.querySelectorAll('.span-select-error')[0];
+  let isValid = false;
 
-  if (!radios[0].checked && !radios[1].checked) {
-    document.querySelectorAll('.span-select-error')[0].style.display = 'block';
-    document.querySelectorAll('.span-select-error')[0].innerHTML = 'Required';
-    isValid = false;
+  radios.forEach((radio) => {
+    if (radio.checked) {
+      isValid = true;
+    }
+  });
+
+  if (!isValid) {
+    errorSpan.style.display = 'block';
+    errorSpan.textContent = 'Required';
   } else {
-    document.querySelectorAll('.span-select-error')[0].style.display = 'none';
+    errorSpan.style.display = 'none';
   }
 }
 
@@ -169,7 +194,6 @@ function getCheckedValue() {
 }
 
 function selectbox() {
-  const select = document.querySelector('#dept');
 
   if (select.value == 0) {
     document.querySelectorAll('.span-select-error')[2].style.display = 'inherit';
@@ -195,6 +219,7 @@ function checkDomain() {
     document.querySelectorAll('.span-error')[5].innerHTML =
       'only @gmail.com or @yahoo.com are allowed';
     isValid = false;
+    email.style.backgroundColor = '#FF000015';
   }
 
   if (!regEx.test(String(first))) {
@@ -202,6 +227,7 @@ function checkDomain() {
     document.querySelectorAll('.span-error')[5].innerHTML =
       'Enter a valid email';
     isValid = false;
+    email.style.backgroundColor = '#FF000015';
   }
 }
 
@@ -224,7 +250,6 @@ function checkAllowedInputs() {
   isAllowed(jobTitle, alphaSpaces, 6, alphaSpacesError);
   isAllowed(socialSecurityNumber, numberHyphens, 2, numberHyphensError);
   isAllowed(phoneNumber, numbersOnly, 4, numbersOnlyError);
-  isAllowed(salary, numbersOnly, 7, numbersOnlyError);
   isAllowed(dateOfBirth, numbersDate, 1, numbersOnlyError);
   isAllowed(hobbies, alphaCommaHyphen, 8, alphaCommaHyphenError);
   isAllowed(notes, alphaNumericSpacePeriods, 9, alphaNumericSpacePeriodsError);
@@ -232,12 +257,15 @@ function checkAllowedInputs() {
 }
 
 function isAllowed(element, expression, index, message) {
-  if (!element.value.match(expression)) {
+  let elements = element.value;
+  if (!elements.match(expression)) {
     document.querySelectorAll('.span-error')[index].style.display = 'block';
     document.querySelectorAll('.span-error')[index].innerHTML = message;
+    element.style.backgroundColor = '#FF000015';
     isValid = false;
   }
 }
+
 
 function isDateValid() {
   const birth = new Date(dateOfBirth.value);
@@ -250,12 +278,13 @@ function isDateValid() {
     document.querySelectorAll('.span-error')[1].style.display = 'block';
     document.querySelectorAll('.span-error')[1].innerHTML = 'Age Should be Between 18 and 100';
     isValid = false;
-    console.log('false');
+    dateOfBirth.style.backgroundColor = '#FF000015';
   }
 
   if (!dateFormat(dateOfBirth.value) || dateOfBirth.value.includes('0000')) {
     document.querySelectorAll('.span-error')[1].style.display = 'block';
     document.querySelectorAll('.span-error')[1].innerHTML = 'Not Valid';
+    dateOfBirth.style.backgroundColor = '#FF000015';
     return false;
   }
 }
@@ -265,22 +294,48 @@ function dateFormat(dateString) {
   return datePattern.test(dateString);
 }
 
-function trimSalary(inputString, character) {
-  const parts = inputString.split(character);
-  salary.value = parts[0];
-  return;
+function trimSalary(inputString) {
+  inputString = inputString.value;
+  const integerNumber = parseInt(floatingNumber);
+  salary.value = integerNumber;
 }
+
 
 function checkRepeat(inputString, index) {
   const characters = ['--', '  ', ',,', '..'];
-  if (characters.some(substring => inputString.includes(substring))) {
-    console.log('....')
+  if (characters.some(substring => inputString.value.includes(substring))) {
     document.querySelectorAll('.valid-input')[index].style.display = 'block';
-    document.querySelectorAll('.valid-input')[index].innerHTML = 'Please Enter a Valid Input';
     document.querySelectorAll('.valid-input')[index].innerHTML = 'Not Valid';
+    inputString.style.backgroundColor = '#FF000015';
+
     isValid = false;
     return;
   } else {
     document.querySelectorAll('.valid-input')[index].style.display = 'none';
   }
+}
+
+
+function checkSalary() {
+  regEx = /^[0-9]*$/;
+  let sal = salaryInteger[0]
+  document.querySelectorAll('.span-error')[7].style.display = 'block';
+
+  if (sal.length < 3 && sal.length != '') {
+    document.querySelectorAll('.span-error')[7].innerHTML = 'Minimum Length is 3';
+    salary.style.backgroundColor = '#FF000015';
+  }
+  if (sal.length > 10) {
+    document.querySelectorAll('.span-error')[7].innerHTML = 'Maximum Length is 10';
+    salary.style.backgroundColor = '#FF000015';
+  }
+  if (!regEx.test(sal)) {
+    document.querySelectorAll('.span-error')[7].innerHTML = 'Numbedrs Only';
+    salary.style.backgroundColor = '#FF000015';
+  }
+
+  if (parseInt(sal) < 100) {
+    document.querySelectorAll('.span-error')[7].innerHTML = 'Mininmum amount is 100';
+  }
+
 }
