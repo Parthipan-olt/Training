@@ -304,7 +304,7 @@ function checkRepeat(inputString, index) {
     inputString.style.backgroundColor = '#FF000015';
 
     isValid = false;
-     return false;
+    return false;
   } else {
     document.querySelectorAll('.valid-input')[index].style.display = 'none';
   }
