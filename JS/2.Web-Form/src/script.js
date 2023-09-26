@@ -257,7 +257,7 @@ function checkAllowedInputs() {
 }
 
 function isAllowed(element, expression, index, message) {
-  let elements = element.value;
+  let elements = element.value.trim();
   if (!elements.match(expression)) {
     document.querySelectorAll('.span-error')[index].style.display = 'block';
     document.querySelectorAll('.span-error')[index].innerHTML = message;
