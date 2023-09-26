@@ -330,7 +330,7 @@ function checkSalary() {
     salary.style.backgroundColor = '#FF000015';
   }
   if (!regEx.test(sal)) {
-    document.querySelectorAll('.span-error')[7].innerHTML = 'Numbedrs Only';
+    document.querySelectorAll('.span-error')[7].innerHTML = 'Numbers Only';
     salary.style.backgroundColor = '#FF000015';
   }
 
