@@ -26,7 +26,7 @@ document.addEventListener('submit', (e) => {
   checkSalary();
   if (isValid === false) {
     e.preventDefault();
-    validate();
+    return false;
   }
 });
 
@@ -35,8 +35,6 @@ inputFields.forEach((inputFields, index) => {
     checkRepeat(inputFields, index);
   });
 });
-
-
 
 addEventListener('beforeinput', clearOnClick);
 addEventListener('click', clearOnClick);
@@ -98,7 +96,6 @@ function isRequired() {
 
 function salToDecimal() {
   const numbersOnly = /^[0-9]*$/;
-
   const joined = [1, 2];
 
   salaryInteger[0] = salary.value;
