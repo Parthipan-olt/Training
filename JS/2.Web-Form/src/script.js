@@ -65,12 +65,12 @@ function resetField() {
 }
 
 function validate() {
+  isLength();
   checkDomain();
   isCheckboxChecked();
   isDateValid();
   isRadioChecked();
   isSelectboxSelected();
-  isLength();
   checkRepeatingSymbols();
   checkAllowedInputs();
   isRequired();
