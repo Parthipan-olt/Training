@@ -73,9 +73,9 @@ function validate() {
   isSelectboxSelected();
   checkRepeatingSymbols();
   checkAllowedInputs();
-  isRequired();
   checkSalary();
   checkStartEnd();
+  isRequired();
 }
 
 function isRequired() {
