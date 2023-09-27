@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 const fullName = document.querySelector('#fName');
 const radios = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
@@ -13,31 +12,25 @@ const salary = document.querySelector('#salary');
 const hobbies = document.querySelector('#hobbies');
 const notes = document.querySelector('#notes');
 const select = document.querySelector('#dept');
-const inputFields = [fullName, socialSecurityNumber, address, jobTitle, hobbies, notes]
+const fields = [fullName, dateOfBirth, socialSecurityNumber, address, phoneNumber, jobTitle, salary, hobbies, notes];
 let isValid = true;
-const salaryInteger = [];
+const salaryInteger = [2];
 
 generateRandom();
 
-
 document.addEventListener('submit', (e) => {
   validate();
-  e.preventDefault();
-  checkSalary();
   if (isValid === false) {
+    validate();
     e.preventDefault();
     return false;
+  } else {
+    return true;
   }
 });
 
-inputFields.forEach((inputFields, index) => {
-  addEventListener('input', (e) => {
-    checkRepeat(inputFields, index);
-  });
-});
-
-addEventListener('beforeinput', clearOnClick);
-addEventListener('click', clearOnClick);
+addEventListener('focusin', clearOnClick)
+addEventListener('beforeinput', clearOnClick)
 
 function clearOnClick() {
   for (let i = 0; i < 10; i++) {
@@ -73,25 +66,28 @@ function resetField() {
 
 function validate() {
   checkDomain();
-  isLength();
-  checkAllowedInputs();
-  getCheckedValue();
+  isCheckboxChecked();
   isDateValid();
-  getRadioValue();
-  selectbox();
+  isRadioChecked();
+  isSelectboxSelected();
+  isLength();
+  checkRepeatingSymbols();
+  checkAllowedInputs();
   isRequired();
+  checkSalary();
+  checkStartEnd();
 }
 
 function isRequired() {
-  isEmpty(fullName, 0);
-  isEmpty(dateOfBirth, 1);
-  isEmpty(socialSecurityNumber, 2);
-  isEmpty(address, 3);
-  isEmpty(phoneNumber, 4);
-  isEmpty(email, 5);
-  isEmpty(jobTitle, 6);
-  isEmpty(salary, 7);
-  isEmpty(hobbies, 8);
+  isEmpty(fullName);
+  isEmpty(dateOfBirth);
+  isEmpty(socialSecurityNumber);
+  isEmpty(address);
+  isEmpty(phoneNumber);
+  isEmpty(email);
+  isEmpty(jobTitle);
+  isEmpty(salary);
+  isEmpty(hobbies);
 }
 
 function salToDecimal() {
@@ -108,28 +104,27 @@ function salToDecimal() {
 }
 
 function isLength() {
-  checkLength(fullName, 3, 20, 0);
-  checkLength(socialSecurityNumber, 7, 9, 2);
-  checkLength(phoneNumber, 7, 10, 4);
-  checkLength(email, 0, 50, 5);
-  checkLength(jobTitle, 3, 50, 6);
-  checkLength(salary, 3, 10, 7);
-  checkLength(hobbies, 3, 25, 8);
+  checkLength(fullName, 3, 20);
+  checkLength(socialSecurityNumber, 7, 9);
+  checkLength(phoneNumber, 7, 10);
+  checkLength(email, 0, 50);
+  checkLength(jobTitle, 3, 50);
+  checkLength(salary, 3, 10);
+  checkLength(hobbies, 3, 25);
 }
 
-function isEmpty(fields, i) {
+function isEmpty(fields) {
   const x = fields.value.trim();
-  const index = i;
 
   if (x == '') {
-    document.querySelectorAll('.span-error')[index].style.display = 'block';
-    document.querySelectorAll('.span-error')[index].innerHTML = 'Required';
+    fields.nextElementSibling.style.display = 'block';
+    fields.nextElementSibling.innerHTML = 'Required';
     fields.style.backgroundColor = '#FF000015';
     isValid = false;
   }
 }
 
-function checkLength(fields, min, max, index) {
+function checkLength(fields, min, max) {
   let field = fields.value.trim()
   let inputLength = field.length;
 
@@ -138,40 +133,38 @@ function checkLength(fields, min, max, index) {
   }
 
   if (inputLength < min && inputLength != 0) {
-    document.querySelectorAll('.span-error')[index].style.display = 'block';
-    document.querySelectorAll('.span-error')[index].innerHTML = `Minimum length is ${min}`;
+    fields.nextElementSibling.style.display = 'block';
+    fields.nextElementSibling.innerHTML = `Minimum length is ${min}`;
     isValid = false;
     fields.style.backgroundColor = '#FF000015';
   }
-
   if (inputLength > max) {
-    document.querySelectorAll('.span-error')[index].style.display = 'block';
-    document.querySelectorAll('.span-error')[index].innerHTML = `Maximum length is ${max}`;
-    isValid = false;
+    fields.nextElementSibling.style.display = 'block';
+    fields.nextElementSibling.innerHTML = `Maximum length is ${max}`;
     fields.style.backgroundColor = '#FF000015';
+    isValid = false;
   }
 }
 
-function getRadioValue() {
-  const errorSpan = document.querySelectorAll('.span-select-error')[0];
-  let isValid = false;
+function isRadioChecked() {
+  const errorSpan = document.querySelector('.span-select-error');
+  let isAnyChecked = false;
 
   radios.forEach((radio) => {
     if (radio.checked) {
-      isValid = true;
+      isAnyChecked = true;
     }
   });
 
-  if (!isValid) {
+  if (!isAnyChecked) {
     errorSpan.style.display = 'block';
     errorSpan.textContent = 'Required';
-  } else {
-    errorSpan.style.display = 'none';
+    isValid = false;
   }
 }
 
-function getCheckedValue() {
-
+function isCheckboxChecked() {
+  const checkboxError = document.querySelectorAll('.span-select-error')[1];
   let isAnyChecked = false;
 
   checkboxes.forEach(function (checkbox) {
@@ -181,21 +174,17 @@ function getCheckedValue() {
   });
 
   if (!isAnyChecked) {
-    document.querySelectorAll('.span-select-error')[1].style.display = 'block';
-    document.querySelectorAll('.span-select-error')[1].innerHTML = 'Required';
+    checkboxError.style.display = 'block';
+    checkboxError.textContent = 'Required';
     isValid = false;
   }
-
 }
 
-function selectbox() {
-
+function isSelectboxSelected() {
   if (select.value == 0) {
-    document.querySelectorAll('.span-select-error')[2].style.display = 'inherit';
-    document.querySelectorAll('.span-select-error')[2].innerHTML = 'Required';
+    select.nextElementSibling.style.display = 'inherit';
+    select.nextElementSibling.innerHTML = 'Required';
     isValid = false;
-  } else {
-    document.querySelectorAll('.span-select-error')[2].style.display = 'none';
   }
 }
 
@@ -206,61 +195,58 @@ function generateRandom() {
 
 function checkDomain() {
   const mail = email.value.trim();
-  const regEx = /^[a-zA-Z]$/;
-  let first = mail.charAt(0);
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!mail.endsWith('@gmail.com') && !mail.endsWith('@yahoo.com')) {
-    document.querySelectorAll('.span-error')[5].style.display = 'block';
-    document.querySelectorAll('.span-error')[5].innerHTML =
-      'only @gmail.com or @yahoo.com are allowed';
-    isValid = false;
+    email.nextElementSibling.style.display = 'block';
+    email.nextElementSibling.innerHTML = 'Only @gmail.com or @yahoo.com are allowed';
     email.style.backgroundColor = '#FF000015';
+    isValid = false;
+  }
+  if (!emailRegex.test(mail)) {
+    email.nextElementSibling.style.display = 'block';
+    email.nextElementSibling.innerHTML = 'Invalid email format';
+    email.style.backgroundColor = '#FF000015';
+    isValid = false;
   }
 
-  if (!regEx.test(String(first))) {
-    document.querySelectorAll('.span-error')[5].style.display = 'block';
-    document.querySelectorAll('.span-error')[5].innerHTML =
-      'Enter a valid email';
-    isValid = false;
-    email.style.backgroundColor = '#FF000015';
-  }
 }
 
 function checkAllowedInputs() {
-  const alphaSpaces = /^[a-zA-Z\s][a-zA-Z\s]*$/;
+  const alphaSpaces = /^[a-zA-Z\s][a-zA-Z\s]+$/;
   const numberHyphens = /^[0-9-]+$/;
-  const numbersOnly = /^[0-9]*$/;
-  const numbersDate = /^[0-9/]*$/;
-  const alphaNumericSpacePeriods = /^[a-zA-Z,.\s]*$/;
-  const alphaCommaHyphen = /^[a-zA-Z,-]*$/;
-  const alphaSpaceCommaHyphen = /^[a-zA-Z\s,-]*$/;
+  const numbersOnly = /^[0-9]+$/;
+  const numbersDate = /^[0-9/]+$/;
+  const alphaNumericSpacePeriods = /^[a-zA-Z,0-9.\s]+$/;
+  const alphaSpaceCommaHyphenNumber = /^[a-zA-Z0-9\s,-]+$/;
+  const alphaSpaceCommaHyphen = /^[a-zA-Z\s,-]+$/;
   const alphaSpacesError = 'Alphabets and Spaces Only';
   const numberHyphensError = 'Numbers and Hyphens Only';
   const numbersOnlyError = 'Numbers Only';
   const alphaNumericSpacePeriodsError = 'Alphanumeric Characters with Spaces, Commas and Periods Only';
-  const alphaCommaHyphenError = 'Alphabets,Commas and Hyphens only';
-  const alphaSpaceCommaHyphenError = 'Alphabets,Spaces,Commas and Hyphens Only';
+  const alphaSpaceCommaHyphenError = 'Alphabets, Spaces, Commas and Hyphens Only';
+  const alphaSpaceCommaHyphennumberError = 'Alphabets, Numbers, Spaces, Commas and Hyphens Only';
 
-  isAllowed(fullName, alphaSpaces, 0, alphaSpacesError);
-  isAllowed(jobTitle, alphaSpaces, 6, alphaSpacesError);
-  isAllowed(socialSecurityNumber, numberHyphens, 2, numberHyphensError);
-  isAllowed(phoneNumber, numbersOnly, 4, numbersOnlyError);
-  isAllowed(dateOfBirth, numbersDate, 1, numbersOnlyError);
-  isAllowed(hobbies, alphaCommaHyphen, 8, alphaCommaHyphenError);
-  isAllowed(notes, alphaNumericSpacePeriods, 9, alphaNumericSpacePeriodsError);
-  isAllowed(address, alphaSpaceCommaHyphen, 3, alphaSpaceCommaHyphenError);
+  isAllowed(fullName, alphaSpaces, alphaSpacesError);
+  isAllowed(socialSecurityNumber, numberHyphens, numberHyphensError);
+  isAllowed(jobTitle, alphaSpaces, alphaSpacesError);
+  isAllowed(phoneNumber, numbersOnly, numbersOnlyError);
+  isAllowed(dateOfBirth, numbersDate, numbersOnlyError);
+  isAllowed(hobbies, alphaSpaceCommaHyphen, alphaSpaceCommaHyphenError);
+  isAllowed(notes, alphaNumericSpacePeriods, alphaNumericSpacePeriodsError);
+  isAllowed(address, alphaSpaceCommaHyphenNumber, alphaSpaceCommaHyphennumberError);
 }
 
-function isAllowed(element, expression, index, message) {
+function isAllowed(element, expression, message) {
   let elements = element.value.trim();
-  if (!elements.match(expression)) {
-    document.querySelectorAll('.span-error')[index].style.display = 'block';
-    document.querySelectorAll('.span-error')[index].innerHTML = message;
+  if (!elements.match(expression) && element.value != '') {
+    console.log('pressed')
+    element.nextElementSibling.style.display = 'block';
+    element.nextElementSibling.innerHTML = message;
     element.style.backgroundColor = '#FF000015';
     isValid = false;
   }
 }
-
 
 function isDateValid() {
   const birth = new Date(dateOfBirth.value);
@@ -270,15 +256,15 @@ function isDateValid() {
   const age = currentYear - birthYear;
 
   if (age > 100 || age < 18 || isNaN(age)) {
-    document.querySelectorAll('.span-error')[1].style.display = 'block';
-    document.querySelectorAll('.span-error')[1].innerHTML = 'Age Should be Between 18 and 100';
-    isValid = false;
+    dateOfBirth.nextElementSibling.style.display = 'block';
+    dateOfBirth.nextElementSibling.innerHTML = 'Age should be between 18 and 100';
     dateOfBirth.style.backgroundColor = '#FF000015';
+    isValid = false;
   }
 
   if (!dateFormat(dateOfBirth.value) || dateOfBirth.value.includes('0000')) {
-    document.querySelectorAll('.span-error')[1].style.display = 'block';
-    document.querySelectorAll('.span-error')[1].innerHTML = 'Not Valid';
+    dateOfBirth.nextElementSibling.innerHTML = 'Invalid';
+    dateOfBirth.nextElementSibling.style.display = 'block';
     dateOfBirth.style.backgroundColor = '#FF000015';
     return false;
   }
@@ -289,48 +275,71 @@ function dateFormat(dateString) {
   return datePattern.test(dateString);
 }
 
-function trimSalary(inputString) {
-  inputString = inputString.value;
-  const integerNumber = parseInt(floatingNumber);
-  salary.value = integerNumber;
-}
-
-
-function checkRepeat(inputString, index) {
-  const characters = ['--', '  ', ',,', '..'];
-  if (characters.some(substring => inputString.value.includes(substring))) {
-    document.querySelectorAll('.valid-input')[index].style.display = 'block';
-    document.querySelectorAll('.valid-input')[index].innerHTML = 'Not Valid';
-    inputString.style.backgroundColor = '#FF000015';
-
-    isValid = false;
-    return false;
-  } else {
-    document.querySelectorAll('.valid-input')[index].style.display = 'none';
-  }
-}
-
-
 function checkSalary() {
-  regEx = /^[0-9]*$/;
+  const regEx = /^[0-9.]*$/;
   let sal = salaryInteger[0]
-  document.querySelectorAll('.span-error')[7].style.display = 'block';
 
-  if (sal.length < 3 && sal.length != '') {
-    document.querySelectorAll('.span-error')[7].innerHTML = 'Minimum Length is 3';
-    salary.style.backgroundColor = '#FF000015';
-  }
-  if (sal.length > 10) {
-    document.querySelectorAll('.span-error')[7].innerHTML = 'Maximum Length is 10';
-    salary.style.backgroundColor = '#FF000015';
-  }
-  if (!regEx.test(sal)) {
-    document.querySelectorAll('.span-error')[7].innerHTML = 'Numbers Only';
-    salary.style.backgroundColor = '#FF000015';
-  }
+  salary.nextElementSibling.style.display = 'block';
 
-  if (parseInt(sal) < 100) {
-    document.querySelectorAll('.span-error')[7].innerHTML = 'Mininmum amount is 100';
-  }
+  if (!salaryInteger[0].length == 0) {
+    if (salaryInteger[0].length < 3) {
+      salary.nextElementSibling.innerHTML = 'Minimum Length is 3';
+      salary.style.backgroundColor = '#FF000015';
+      return false;
+    }
+    if (salaryInteger[0].length > 10) {
+      salary.nextElementSibling.innerHTML = 'Maximum Length is 10';
+      salary.style.backgroundColor = '#FF000015';
+      return false;
+    }
 
+    if (!regEx.test(sal)) {
+      salary.nextElementSibling.innerHTML = 'Numbers Only';
+      salary.style.backgroundColor = '#FF000015';
+      return false;
+    }
+
+    if (parseInt(sal) < 100) {
+      salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
+      return false;
+    }
+
+    if (salaryInteger[0].includes('.')) {
+      salary.nextElementSibling.innerHTML = 'Numbers Only';
+      return false;
+    }
+  }
+}
+
+function checkStartEnd() {
+  const inputFields = [socialSecurityNumber, address, jobTitle, hobbies, notes];
+  for (let i = 0; i < 5; i++) {
+    const fieldValue = inputFields[i].value.trim();
+    if (fieldValue !== '') {
+      if (fieldValue.startsWith('-') || fieldValue.startsWith(',') ||
+        fieldValue.endsWith('-') || fieldValue.endsWith(',')) {
+        inputFields[i].nextElementSibling.style.display = 'block';
+        inputFields[i].nextElementSibling.innerHTML = 'Input cannot start or end with symbols';
+        inputFields[i].style.backgroundColor = '#FF000015';
+        isValid = false;
+      }
+    }
+  }
+}
+
+function checkRepeatingSymbols() {
+  const inputFields = [socialSecurityNumber, address, jobTitle, hobbies, notes];
+  for (let i = 0; i < 5; i++) {
+    const fieldValue = inputFields[i].value.trim();
+    if (fieldValue !== '') {
+      if (fieldValue.includes('--') || fieldValue.includes('  ') ||
+        fieldValue.includes('..') || fieldValue.includes(',,')) {
+        inputFields[i].nextElementSibling.style.display = 'block';
+        inputFields[i].nextElementSibling.innerHTML = 'Repeating symbols';
+        inputFields[i].style.backgroundColor = '#FF000015';
+        isValid = false;
+        return;
+      }
+    }
+  }
 }
