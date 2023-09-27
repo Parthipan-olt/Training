@@ -1,3 +1,4 @@
+// Selecting form input elements
 const fullName = document.querySelector('#fName');
 const radios = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
@@ -13,15 +14,15 @@ const hobbies = document.querySelector('#hobbies');
 const notes = document.querySelector('#notes');
 const select = document.querySelector('#dept');
 const fields = [fullName, dateOfBirth, socialSecurityNumber, address, phoneNumber, jobTitle, salary, hobbies, notes];
-let isValid = true;
 const salaryInteger = [2];
+let isValid = true;
 
 generateRandom();
 
+// Add a submit event listener to the form
 document.addEventListener('submit', (e) => {
-  validate();
+  validate(); // Validate the form
   if (isValid === false) {
-    validate();
     e.preventDefault();
     return false;
   } else {
@@ -29,9 +30,14 @@ document.addEventListener('submit', (e) => {
   }
 });
 
-addEventListener('focusin', clearOnClick)
-addEventListener('beforeinput', clearOnClick)
+addEventListener('focusin', clearOnClick);
+addEventListener('beforeinput', clearOnClick);
 
+salary.addEventListener('click', (e) => {
+  e.target.value = '';
+});
+
+// Function to clear validation errors
 function clearOnClick() {
   for (let i = 0; i < 10; i++) {
     document.querySelectorAll('.span-error')[i].style.display = 'none';
@@ -43,10 +49,12 @@ function clearOnClick() {
   }
 }
 
+// Function to clear the salary field
 function clearSalaryField() {
   salary.value = '';
 }
 
+// Function to reset all form fields
 function resetField() {
   clearOnClick();
 
@@ -64,20 +72,22 @@ function resetField() {
   select.selectedIndex = 0;
 }
 
+// Function to validate the entire form
 function validate() {
-  isLength();
   checkDomain();
   isCheckboxChecked();
   isDateValid();
   isRadioChecked();
   isSelectboxSelected();
+  isLength();
   checkRepeatingSymbols();
   checkAllowedInputs();
+  isRequired();
   checkSalary();
   checkStartEnd();
-  isRequired();
 }
 
+// Function to check if fields are required and display errors
 function isRequired() {
   isEmpty(fullName);
   isEmpty(dateOfBirth);
@@ -90,6 +100,7 @@ function isRequired() {
   isEmpty(hobbies);
 }
 
+// Function to convert salary to decimal format
 function salToDecimal() {
   const numbersOnly = /^[0-9]*$/;
   const joined = [1, 2];
@@ -103,6 +114,7 @@ function salToDecimal() {
   }
 }
 
+// Function to check field lengths
 function isLength() {
   checkLength(fullName, 3, 20);
   checkLength(socialSecurityNumber, 7, 9);
@@ -113,6 +125,7 @@ function isLength() {
   checkLength(hobbies, 3, 25);
 }
 
+// Function to check if a field is empty and display errors
 function isEmpty(fields) {
   const x = fields.value.trim();
 
@@ -124,8 +137,9 @@ function isEmpty(fields) {
   }
 }
 
+// Function to check field length and display errors
 function checkLength(fields, min, max) {
-  let field = fields.value.trim()
+  let field = fields.value.trim();
   let inputLength = field.length;
 
   if (fields == salaryInteger) {
@@ -146,6 +160,7 @@ function checkLength(fields, min, max) {
   }
 }
 
+// Function to check if at least one radio button is checked
 function isRadioChecked() {
   const errorSpan = document.querySelector('.span-select-error');
   let isAnyChecked = false;
@@ -163,6 +178,7 @@ function isRadioChecked() {
   }
 }
 
+// Function to check if at least one checkbox is checked
 function isCheckboxChecked() {
   const checkboxError = document.querySelectorAll('.span-select-error')[1];
   let isAnyChecked = false;
@@ -180,6 +196,7 @@ function isCheckboxChecked() {
   }
 }
 
+// Function to check if a value is selected in the dropdown
 function isSelectboxSelected() {
   if (select.value == 0) {
     select.nextElementSibling.style.display = 'inherit';
@@ -188,11 +205,13 @@ function isSelectboxSelected() {
   }
 }
 
+// Function to generate a random employee ID
 function generateRandom() {
   const eIdRandom = Math.round(Math.random() * (10 - 1) + 1);
   eId.value = eIdRandom;
 }
 
+// Function to check the email domain and format
 function checkDomain() {
   const mail = email.value.trim();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -209,9 +228,9 @@ function checkDomain() {
     email.style.backgroundColor = '#FF000015';
     isValid = false;
   }
-
 }
 
+// Function to check if input matches allowed patterns
 function checkAllowedInputs() {
   const alphaSpaces = /^[a-zA-Z\s][a-zA-Z\s]+$/;
   const numberHyphens = /^[0-9-]+$/;
@@ -237,6 +256,7 @@ function checkAllowedInputs() {
   isAllowed(address, alphaSpaceCommaHyphenNumber, alphaSpaceCommaHyphennumberError);
 }
 
+// Function to check if input matches a specific pattern and display errors
 function isAllowed(element, expression, message) {
   let elements = element.value.trim();
   if (!elements.match(expression) && element.value != '') {
@@ -248,6 +268,7 @@ function isAllowed(element, expression, message) {
   }
 }
 
+// Function to check if the date of birth is valid
 function isDateValid() {
   const birth = new Date(dateOfBirth.value);
   const birthYear = birth.getFullYear();
@@ -270,11 +291,13 @@ function isDateValid() {
   }
 }
 
+// Function to check if date follows a specific format
 function dateFormat(dateString) {
   const datePattern = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
   return datePattern.test(dateString);
 }
 
+// Function to check salary input
 function checkSalary() {
   const regEx = /^[0-9.]*$/;
   let sal = salaryInteger[0]
@@ -298,7 +321,7 @@ function checkSalary() {
       salary.style.backgroundColor = '#FF000015';
       return false;
     }
-
+    console.log(parseInt(sal))
     if (parseInt(sal) < 100) {
       salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
       return false;
@@ -311,6 +334,7 @@ function checkSalary() {
   }
 }
 
+// Function to check if input starts or ends with symbols
 function checkStartEnd() {
   const inputFields = [socialSecurityNumber, address, jobTitle, hobbies, notes];
   for (let i = 0; i < 5; i++) {
@@ -327,6 +351,7 @@ function checkStartEnd() {
   }
 }
 
+// Function to check for repeating symbols
 function checkRepeatingSymbols() {
   const inputFields = [socialSecurityNumber, address, jobTitle, hobbies, notes];
   for (let i = 0; i < 5; i++) {
