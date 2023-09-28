@@ -76,9 +76,9 @@ function validate() {
   checkDomain();
   isRadioChecked();
   isSelectboxSelected();
-  checkStartEnd();
   salToDecimal();
   isLength();
+  checkStartEnd();
   checkSalary();
   isCheckboxChecked();
   isDateValid();
