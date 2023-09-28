@@ -132,8 +132,7 @@
 
             <div class="form-group group">
                 <label for="salary">Salary<span class="text-danger">*</span></label>
-                <input type="text" id="salary" class="form-control field" onfocusout="salToDecimal()"
-                    onclick="clearSalaryField()">
+                <input type="text" id="salary" class="form-control field" onblur="salToDecimal()">
                 <span class="span-error"> </span>
             </div>
 

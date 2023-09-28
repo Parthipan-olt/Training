@@ -12,3 +12,6 @@ span {
     margin: 30px 0;
 }
 
+.span-error{
+    display: none;
+}
