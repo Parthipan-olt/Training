@@ -30,9 +30,10 @@ document.addEventListener('submit', (e) => {
     e.preventDefault();
     return false;
   } else {
-    ')alert('
-    Success;
+    return true;
   }
+
+
 });
 
 // Function to clear validation errors
@@ -114,7 +115,7 @@ function salToDecimal() {
       salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
       isValid = false;
     } else {
-      salary.style.backgroundColor='#ff000015'
+      salary.style.backgroundColor = '#ff000015'
       salary.nextElementSibling.style.display = 'block';
       salary.nextElementSibling.innerHTML = 'Invalid';
     }
