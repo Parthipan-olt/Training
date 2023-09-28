@@ -13,27 +13,27 @@ const salary = document.querySelector('#salary');
 const hobbies = document.querySelector('#hobbies');
 const notes = document.querySelector('#notes');
 const select = document.querySelector('#dept');
-const fields = [fullName, dateOfBirth, email, socialSecurityNumber, address, phoneNumber, jobTitle, salary, hobbies, notes];
+const fields = [
+  fullName, dateOfBirth, email, socialSecurityNumber, address,
+  phoneNumber, jobTitle, salary, hobbies, notes
+];
 let isValid = true;
 
 generateRandom();
 callLengthHandler();
 
-
 addEventListener('focusin', clearOnClick);
 addEventListener('beforeinput', clearOnClick);
 
-
 // Add a submit event listener to the form
 document.addEventListener('submit', (e) => {
+
   if (!validate()) {
     e.preventDefault();
     return false;
   } else {
     return true;
   }
-
-
 });
 
 // Function to clear validation errors
@@ -73,15 +73,15 @@ function resetField() {
 function validate() {
   isValid = true;
 
-  checkDomain();
+  checkEmail();
   isRadioChecked();
   isSelectboxSelected();
-  salToDecimal();
   isLength();
   checkStartEnd();
   checkSalary();
   isCheckboxChecked();
   isDateValid();
+  salToDecimal();
   checkRepeatingSymbols();
   checkAllowedInputs();
   isRequired();
@@ -99,26 +99,27 @@ function isRequired() {
   isEmpty(email);
   isEmpty(jobTitle);
   isEmpty(hobbies);
-  isEmpty(salary)
+  isEmpty(salary);
 }
 
 // Function to convert salary to decimal format
 function salToDecimal() {
   const salaryValue = salary.value.trim();
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
-
-  salary.nextElementSibling.style.display = 'none';
+  salary.nextElementSibling.style.display = 'block';
 
   if (salaryValue !== '') {
+    const decimalSalary = parseFloat(salaryValue);
+    console.log(decimalSalary.toFixed(2))
+    if (!isNaN(decimalSalary)) {
+      salary.value = decimalSalary.toFixed(2);
+    }
     if (!salaryFormat.test(salaryValue)) {
       salary.style.backgroundColor = '#ff000015';
       salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
       isValid = false;
-    } else {
-      salary.style.backgroundColor = '#fff'
-      salary.nextElementSibling.style.display = 'none';
-      salary.nextElementSibling.innerHTML = '';
     }
+
   }
   checkSalary();
 }
@@ -147,8 +148,8 @@ function isEmpty(field) {
 
 // Function to check field length and display errors
 function checkLength(field, min, max) {
-  let value = field.value.trim();
-  let inputLength = value.length;
+  let fieldValue = field.value.trim();
+  let inputLength = fieldValue.length;
 
   if (inputLength < min && inputLength !== 0) {
     field.nextElementSibling.style.display = 'block';
@@ -217,7 +218,7 @@ function generateRandom() {
 }
 
 // Function to check the email domain and format
-function checkDomain() {
+function checkEmail() {
   const mail = email.value.trim();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -278,14 +279,14 @@ function isDateValid() {
   const age = currentYear - birthYear;
 
   if (dateOfBirth.value !== '') {
+    dateOfBirth.nextElementSibling.style.display = 'block';
+
     if (age > 100 || age < 18 || isNaN(age) || !dateFormat(dateOfBirth.value) || dateOfBirth.value.includes('0000')) {
-      dateOfBirth.nextElementSibling.style.display = 'block';
       dateOfBirth.nextElementSibling.innerHTML = 'Age should be between 18 and 100';
       dateOfBirth.style.backgroundColor = '#FF000015';
       isValid = false;
     }
     if (!dateFormat(dateOfBirth.value)) {
-      dateOfBirth.nextElementSibling.style.display = 'block';
       dateOfBirth.nextElementSibling.innerHTML = 'Invalid format';
       dateOfBirth.style.backgroundColor = '#FF000015';
       isValid = false;
@@ -305,24 +306,24 @@ function checkSalary() {
 
   if (salary.value !== '') {
     if (salary.value.length < 3 || salary.value.length > 10 || !regEx.test(salary.value) || salary.value < 100) {
-
+      salary.nextElementSibling.style.display = 'block';
       salary.style.backgroundColor = '#FF000015';
 
-
       if (salary.value.length < 3) {
-        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Minimum Length is 3';
+        salary.nextElementSibling.style.display = 'block';
       } else if (salary.value.length > 10) {
-        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Maximum Length is 10';
+        salary.nextElementSibling.style.display = 'block';
       } else if (!regEx.test(salary.value)) {
-        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
-      } else if (salary.value < 100) {
         salary.nextElementSibling.style.display = 'block';
+      } else if (salary.value < 100) {
         salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
+        salary.nextElementSibling.style.display = 'block';
       }
       isValid = false;
+      return false;
     }
   }
 }
@@ -364,7 +365,8 @@ function checkRepeatingSymbols() {
     }
   });
 }
-//function to limit the input field
+
+// Function to limit the input field
 function handleMaxInput(element, value) {
   element.addEventListener('input', (e) => {
     if (element === salary && element.value.length >= value) {
