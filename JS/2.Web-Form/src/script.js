@@ -82,8 +82,8 @@ function validate() {
   isDateValid();
   checkRepeatingSymbols();
   checkAllowedInputs();
-  isRequired();
   salToDecimal();
+  isRequired();
 
   return isValid;
 }
@@ -131,7 +131,7 @@ function isLength() {
   checkLength(email, 0, 50);
   checkLength(jobTitle, 3, 50);
   checkLength(hobbies, 3, 25);
-  checkLength(salary, 7, 10)
+  checkLength(salary, 3, 10)
 }
 
 // Function to check if a field is empty and display errors
@@ -305,7 +305,7 @@ function checkSalary() {
   const regEx = /^[0-9.]*$/;
 
   if (salary.value !== '') {
-    if (salary.value.length < 3 || salary.value.length > 10 || !regEx.test(salary.value) || salary.value < 100) {
+    if (!regEx.test(salary.value) || salary.value < 100) {
 
       salary.style.backgroundColor = '#FF000015';
 
