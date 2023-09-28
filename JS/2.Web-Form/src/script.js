@@ -78,13 +78,12 @@ function validate() {
   isSelectboxSelected();
   isLength();
   checkStartEnd();
-  checkSalary();
   isCheckboxChecked();
   isDateValid();
-  salToDecimal();
   checkRepeatingSymbols();
   checkAllowedInputs();
   isRequired();
+  salToDecimal();
 
   return isValid;
 }
@@ -108,7 +107,7 @@ function salToDecimal() {
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
   salary.nextElementSibling.style.display = 'block';
 
-  if (salaryValue !== '') {
+  if (salaryValue !== '' && !isNaN(salary.value)) {
     const decimalSalary = parseFloat(salaryValue);
     console.log(decimalSalary.toFixed(2))
     if (!isNaN(decimalSalary)) {
@@ -168,7 +167,7 @@ function checkLength(field, min, max) {
 
 // Function to check if at least one radio button is checked
 function isRadioChecked() {
-  const errorSpan = document.querySelector('.span-select-error');
+  const radioButtonError = document.querySelector('.span-select-error');
   let isAnyChecked = false;
 
   radio.forEach((radio) => {
@@ -178,8 +177,8 @@ function isRadioChecked() {
   });
 
   if (!isAnyChecked) {
-    errorSpan.style.display = 'block';
-    errorSpan.textContent = 'Required';
+    radioButtonError.style.display = 'block';
+    radioButtonError.innerHTML = 'Required';
     isValid = false;
   }
 }
@@ -197,7 +196,7 @@ function isCheckboxChecked() {
 
   if (!isAnyChecked) {
     checkboxError.style.display = 'block';
-    checkboxError.textContent = 'Required';
+    checkboxError.innerHTML = 'Required';
     isValid = false;
   }
 }
@@ -322,6 +321,7 @@ function checkSalary() {
         salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
         salary.nextElementSibling.style.display = 'block';
       }
+      salary.value = ' '
       isValid = false;
       return false;
     }
