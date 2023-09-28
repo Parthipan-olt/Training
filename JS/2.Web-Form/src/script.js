@@ -1,6 +1,6 @@
 // Selecting form input elements
 const fullName = document.querySelector('#fName');
-const radios = document.querySelectorAll('input[name="gender"]');
+const radio = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
 const socialSecurityNumber = document.querySelector('#socialSecurityNumber');
 const address = document.querySelector('#address');
@@ -61,7 +61,7 @@ function resetField() {
     checkbox.checked = false;
   });
 
-  radios.forEach((radio) => {
+  radio.forEach((radio) => {
     radio.checked = false;
   });
 
@@ -171,7 +171,7 @@ function isRadioChecked() {
   const errorSpan = document.querySelector('.span-select-error');
   let isAnyChecked = false;
 
-  radios.forEach((radio) => {
+  radio.forEach((radio) => {
     if (radio.checked) {
       isAnyChecked = true;
     }
