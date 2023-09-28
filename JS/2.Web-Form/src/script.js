@@ -131,6 +131,7 @@ function isLength() {
   checkLength(email, 0, 50);
   checkLength(jobTitle, 3, 50);
   checkLength(hobbies, 3, 25);
+  checkLength(salary, 7, 10)
 }
 
 // Function to check if a field is empty and display errors
@@ -305,16 +306,10 @@ function checkSalary() {
 
   if (salary.value !== '') {
     if (salary.value.length < 3 || salary.value.length > 10 || !regEx.test(salary.value) || salary.value < 100) {
-      salary.nextElementSibling.style.display = 'block';
+
       salary.style.backgroundColor = '#FF000015';
 
-      if (salary.value.length < 3) {
-        salary.nextElementSibling.innerHTML = 'Minimum Length is 3';
-        salary.nextElementSibling.style.display = 'block';
-      } else if (salary.value.length > 10) {
-        salary.nextElementSibling.innerHTML = 'Maximum Length is 10';
-        salary.nextElementSibling.style.display = 'block';
-      } else if (!regEx.test(salary.value)) {
+      if (!regEx.test(salary.value)) {
         salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
         salary.nextElementSibling.style.display = 'block';
       } else if (salary.value < 100) {
