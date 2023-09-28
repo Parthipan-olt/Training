@@ -74,7 +74,6 @@ function validate() {
   isValid = true;
 
   checkDomain();
-  isDateValid();
   isRadioChecked();
   isSelectboxSelected();
   checkStartEnd();
@@ -82,6 +81,7 @@ function validate() {
   isLength();
   checkSalary();
   isCheckboxChecked();
+  isDateValid();
   checkRepeatingSymbols();
   checkAllowedInputs();
   isRequired();
@@ -115,11 +115,12 @@ function salToDecimal() {
       salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
       isValid = false;
     } else {
-      salary.style.backgroundColor = '#ff000015'
-      salary.nextElementSibling.style.display = 'block';
-      salary.nextElementSibling.innerHTML = 'Invalid';
+      salary.style.backgroundColor = '#fff'
+      salary.nextElementSibling.style.display = 'none';
+      salary.nextElementSibling.innerHTML = '';
     }
   }
+  checkSalary();
 }
 
 // Function to check field lengths
@@ -283,6 +284,12 @@ function isDateValid() {
       dateOfBirth.style.backgroundColor = '#FF000015';
       isValid = false;
     }
+    if (!dateFormat(dateOfBirth.value)) {
+      dateOfBirth.nextElementSibling.style.display = 'block';
+      dateOfBirth.nextElementSibling.innerHTML = 'Invalid format';
+      dateOfBirth.style.backgroundColor = '#FF000015';
+      isValid = false;
+    }
   }
 }
 
@@ -295,24 +302,26 @@ function dateFormat(dateString) {
 // Function to check salary input
 function checkSalary() {
   const regEx = /^[0-9.]*$/;
-  salary.nextElementSibling.style.display = 'none';
 
   if (salary.value !== '') {
     if (salary.value.length < 3 || salary.value.length > 10 || !regEx.test(salary.value) || salary.value < 100) {
-      salary.nextElementSibling.style.display = 'block';
+
+      salary.style.backgroundColor = '#FF000015';
+
 
       if (salary.value.length < 3) {
+        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Minimum Length is 3';
       } else if (salary.value.length > 10) {
+        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Maximum Length is 10';
       } else if (!regEx.test(salary.value)) {
+        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
       } else if (salary.value < 100) {
+        salary.nextElementSibling.style.display = 'block';
         salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
       }
-      salary.nextElementSibling.style.display = 'block';
-      salary.nextElementSibling.innerHTML = 'Invalid';
-      salary.style.backgroundColor = '#FF000015';
       isValid = false;
     }
   }
