@@ -1,0 +1,33 @@
+textarea {
+    resize: none;
+}
+
+span {
+    text-align: right;
+    font-size: smaller;
+    color: #ff0000;
+}
+
+.group {
+    margin: 30px 0;
+}
+
+.span-error {
+    display: none;
+}
+p {
+    display: flex;
+    align-items: flex-start; /* Vertically align the text to the bottom */
+    border-bottom: solid 1px #ccc;
+}
+
+p span {
+    color: #000;
+    text-align: left;
+    display: inline-block;
+    vertical-align: bottom; /* Vertically align the text at the bottom of the span */
+    font-size: medium;
+    width: 50%;
+    word-wrap: break-word;
+}
+.data-display{display: none;} 
