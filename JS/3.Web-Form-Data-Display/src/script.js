@@ -42,7 +42,7 @@ document.addEventListener('submit', (e) => {
     return false;
   } else {
     
-    Displayed();
+  
     saveData();
     e.preventDefault();
     return true;
@@ -335,7 +335,7 @@ function salToDecimal() {
   const salaryValue = salary.value.trim();
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
 
-  salary.nextElementSibling.style.display = 'block';
+  
 
   if (salaryValue !== '' && !isNaN(salary.value) && salaryFormat.test(salaryValue)) {
     const decimalSalary = parseFloat(salaryValue);
@@ -357,7 +357,6 @@ function salToDecimal() {
 // Function to check salary input
 function checkSalary() {
   const regEx = /^[0-9.]*$/;
-
   if (salary.value !== '') {
     if (!regEx.test(salary.value) || salary.value < 100) {
 
@@ -372,9 +371,7 @@ function checkSalary() {
       }
       isValid = false;
       return false;
-    } else {
-      salary.nextElementSibling.style.display = 'none';
-    }
+    } 
   }
 }
 
