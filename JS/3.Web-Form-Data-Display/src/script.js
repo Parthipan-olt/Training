@@ -293,17 +293,15 @@ function isValidDate(dateString) {
   }
 
   const [year, month, day] = dateParts;
-  const numericMonth = parseInt(month, 10);
-  const numericDay = parseInt(day, 10);
 
   if (
     isNaN(year) ||
-    isNaN(numericMonth) ||
-    isNaN(numericDay) ||
+    isNaN(month) ||
+    isNaN(day) ||
     year.length !== 4 ||
-    numericMonth < 1 || numericMonth > 12 ||
-    numericDay < 1 || numericDay > 31 ||
-    (numericMonth === 2 && (numericDay > 27 || (numericDay === 29 && !isLeapYear(parseInt(year, 10)))))
+    month < 1 || month > 12 ||
+    day < 1 || day > 31 ||
+    (month === '02' && day > 28)
   ) {
     return false;
   }
