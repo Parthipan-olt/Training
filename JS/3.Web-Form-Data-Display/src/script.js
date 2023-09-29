@@ -37,12 +37,12 @@ addEventListener('input', clearOnClick);
 
 // Add a submit event listener to the form
 document.addEventListener('submit', (e) => {
-
   if (!validate()) {
     e.preventDefault();
     return false;
   } else {
-
+    
+    Displayed();
     saveData();
     e.preventDefault();
     return true;
