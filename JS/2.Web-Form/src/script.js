@@ -1,3 +1,4 @@
+/* eslint-disable func-style */
 // Selecting form input elements
 const fullName = document.querySelector('#fName');
 const radio = document.querySelectorAll('input[name="gender"]');
@@ -17,12 +18,12 @@ const fields = [
   fullName, dateOfBirth, email, socialSecurityNumber, address,
   phoneNumber, jobTitle, salary, hobbies, notes
 ];
+
 let isValid = true;
 
 generateRandom();
 callLengthHandler();
 
-addEventListener('focusin', clearOnClick);
 addEventListener('beforeinput', clearOnClick);
 
 // Add a submit event listener to the form
@@ -44,6 +45,7 @@ function clearOnClick() {
   });
 
   const selectErrors = document.querySelectorAll('.span-select-error');
+
   selectErrors.forEach((error) => {
     error.style.display = 'none';
   });
@@ -105,11 +107,13 @@ function isRequired() {
 function salToDecimal() {
   const salaryValue = salary.value.trim();
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
+
   salary.nextElementSibling.style.display = 'block';
 
   if (salaryValue !== '' && !isNaN(salary.value)) {
     const decimalSalary = parseFloat(salaryValue);
-    console.log(decimalSalary.toFixed(2))
+
+    console.log(decimalSalary.toFixed(2));
     if (!isNaN(decimalSalary)) {
       salary.value = decimalSalary.toFixed(2);
     }
@@ -131,7 +135,7 @@ function isLength() {
   checkLength(email, 0, 50);
   checkLength(jobTitle, 3, 50);
   checkLength(hobbies, 3, 25);
-  checkLength(salary, 3, 10)
+  checkLength(salary, 3, 10);
 }
 
 // Function to check if a field is empty and display errors
@@ -148,8 +152,9 @@ function isEmpty(field) {
 
 // Function to check field length and display errors
 function checkLength(field, min, max) {
-  let fieldValue = field.value.trim();
-  let inputLength = fieldValue.length;
+  const fieldValue = field.value.trim();
+
+  const inputLength = fieldValue.length;
 
   if (inputLength < min && inputLength !== 0) {
     field.nextElementSibling.style.display = 'block';
@@ -169,6 +174,7 @@ function checkLength(field, min, max) {
 // Function to check if at least one radio button is checked
 function isRadioChecked() {
   const radioButtonError = document.querySelector('.span-select-error');
+
   let isAnyChecked = false;
 
   radio.forEach((radio) => {
@@ -187,6 +193,7 @@ function isRadioChecked() {
 // Function to check if at least one checkbox is checked
 function isCheckboxChecked() {
   const checkboxError = document.querySelectorAll('.span-select-error')[1];
+
   let isAnyChecked = false;
 
   checkboxes.forEach((checkbox) => {
@@ -214,6 +221,7 @@ function isSelectboxSelected() {
 // Function to generate a random employee ID
 function generateRandom() {
   const eIdRandom = Math.round(Math.random() * (10 - 1) + 1);
+
   eId.value = eIdRandom;
 }
 
@@ -261,7 +269,8 @@ function checkAllowedInputs() {
 
 // Function to check if input matches a specific pattern and display errors
 function isAllowed(element, expression, message) {
-  let elements = element.value.trim();
+  const elements = element.value.trim();
+
   if (!elements.match(expression) && elements !== '') {
     element.nextElementSibling.style.display = 'block';
     element.nextElementSibling.innerHTML = message;
@@ -297,6 +306,7 @@ function isDateValid() {
 // Function to check if date follows a specific format
 function dateFormat(dateString) {
   const datePattern = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
+
   return datePattern.test(dateString);
 }
 
@@ -316,7 +326,7 @@ function checkSalary() {
         salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
         salary.nextElementSibling.style.display = 'block';
       }
-      salary.value = ' '
+      salary.value = ' ';
       isValid = false;
       return false;
     }
@@ -345,18 +355,16 @@ function checkStartEnd() {
 // Function to check for repeating symbols
 function checkRepeatingSymbols() {
   const inputFields = [socialSecurityNumber, address, jobTitle, hobbies, notes];
+  const repeatingSymbolsRegex = /(--|\s\s|\.\.|,,)/;
 
   inputFields.forEach((field) => {
     const fieldValue = field.value.trim();
 
-    if (fieldValue !== '') {
-      if (fieldValue.includes('--') || fieldValue.includes('  ') ||
-        fieldValue.includes('..') || fieldValue.includes(',,')) {
-        field.nextElementSibling.style.display = 'block';
-        field.nextElementSibling.innerHTML = 'Repeating symbols';
-        field.style.backgroundColor = '#FF000015';
-        isValid = false;
-      }
+    if (fieldValue !== '' && repeatingSymbolsRegex.test(fieldValue)) {
+      field.nextElementSibling.style.display = 'block';
+      field.nextElementSibling.innerHTML = 'Repeating symbols';
+      field.style.backgroundColor = '#FF000015';
+      isValid = false;
     }
   });
 }
