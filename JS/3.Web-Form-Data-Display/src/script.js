@@ -272,14 +272,15 @@ function isDateValid() {
     if (age > 100 || age < 18 || isNaN(age) || !dateFormat(dateOfBirth.value) || dateOfBirth.value.includes('0000')) {
       dateOfBirth.nextElementSibling.innerHTML = 'Age should be between 18 and 100';
       dateOfBirth.nextElementSibling.style.display = 'block';
-
       dateOfBirth.style.backgroundColor = '#FF000015';
       isValid = false;
+    } else {
+      dateOfBirth.nextElementSibling.style.display = 'none';
+
     }
     if (!dateFormat(dateOfBirth.value) || !isValidDate(dateOfBirth.value)) {
       dateOfBirth.nextElementSibling.innerHTML = 'Invalid Date';
       dateOfBirth.nextElementSibling.style.display = 'block';
-
       dateOfBirth.style.backgroundColor = '#FF000015';
       isValid = false;
     } else {
