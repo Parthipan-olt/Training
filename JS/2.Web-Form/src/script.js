@@ -1,4 +1,5 @@
 /* eslint-disable func-style */
+
 // Selecting form input elements
 const fullName = document.querySelector('#fName');
 const radio = document.querySelectorAll('input[name="gender"]');
@@ -108,19 +109,14 @@ function salToDecimal() {
   const salaryValue = salary.value.trim();
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
 
-  salary.nextElementSibling.style.display = 'block';
-
   if (salaryValue !== '' && !isNaN(salary.value)) {
     const decimalSalary = parseFloat(salaryValue);
 
-    console.log(decimalSalary.toFixed(2));
     if (!isNaN(decimalSalary)) {
       salary.value = decimalSalary.toFixed(2);
     }
     if (!salaryFormat.test(salaryValue)) {
-      salary.style.backgroundColor = '#ff000015';
-      salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
-      isValid = false;
+      showError(salary, 'Please Enter a Valid Number');
     }
 
   }
@@ -143,31 +139,21 @@ function isEmpty(field) {
   const x = field.value.trim();
 
   if (x === '') {
-    field.nextElementSibling.style.display = 'block';
-    field.nextElementSibling.innerHTML = 'Required';
-    field.style.backgroundColor = '#FF000015';
-    isValid = false;
+    showError(field, 'Required');
   }
 }
 
 // Function to check field length and display errors
 function checkLength(field, min, max) {
   const fieldValue = field.value.trim();
-
   const inputLength = fieldValue.length;
 
   if (inputLength < min && inputLength !== 0) {
-    field.nextElementSibling.style.display = 'block';
-    field.nextElementSibling.innerHTML = `Minimum length is ${min}`;
-    field.style.backgroundColor = '#FF000015';
-    isValid = false;
+    showError(field, `Minimum length is ${min}`);
   }
 
   if (inputLength > max) {
-    field.nextElementSibling.style.display = 'block';
-    field.nextElementSibling.innerHTML = `Maximum length is ${max}`;
-    field.style.backgroundColor = '#FF000015';
-    isValid = false;
+    showError(field, `Maximum length is ${max}`);
   }
 }
 
@@ -212,16 +198,15 @@ function isCheckboxChecked() {
 // Function to check if a value is selected in the dropdown
 function isSelectboxSelected() {
   if (select.value == 0) {
-    select.nextElementSibling.style.display = 'inherit';
     select.nextElementSibling.innerHTML = 'Required';
-    isValid = false;
+    select.nextElementSibling.style.display = 'block'
+    isValid = false
   }
 }
 
 // Function to generate a random employee ID
 function generateRandom() {
   const eIdRandom = Math.round(Math.random() * (10 - 1) + 1);
-
   eId.value = eIdRandom;
 }
 
@@ -232,17 +217,11 @@ function checkEmail() {
 
   if (mail !== '') {
     if (!mail.endsWith('@gmail.com') && !mail.endsWith('@yahoo.com')) {
-      email.nextElementSibling.style.display = 'block';
-      email.nextElementSibling.innerHTML = 'Only @gmail.com or @yahoo.com are allowed';
-      email.style.backgroundColor = '#FF000015';
-      isValid = false;
+      showError(email, 'Only @gmail.com or @yahoo.com are allowed');
     }
 
     if (!emailRegex.test(mail)) {
-      email.nextElementSibling.style.display = 'block';
-      email.nextElementSibling.innerHTML = 'Invalid email format';
-      email.style.backgroundColor = '#FF000015';
-      isValid = false;
+      showError(email, 'Invalid email format');
     }
   }
 }
@@ -262,52 +241,67 @@ function checkAllowedInputs() {
   isAllowed(jobTitle, alphaSpaces, 'Alphabets and Spaces Only');
   isAllowed(phoneNumber, numbersOnly, 'Numbers Only');
   isAllowed(dateOfBirth, numbersDate, 'Numbers Only');
-  isAllowed(hobbies, alphaSpaceCommaHyphen, 'Alphabets, Spaces, Commas and Hyphens Only');
+  isAllowed(hobbies, alphaSpaceCommaHyphen, 'Alphabets, Spaces, Commas, and Hyphens Only');
   isAllowed(notes, alphaNumericSpacePeriods, 'Alphanumeric Characters with Spaces, Commas, and Periods Only');
   isAllowed(address, alphaSpaceCommaHyphenNumber, 'Alphabets, Numbers, Spaces, Commas, and Hyphens Only');
 }
 
 // Function to check if input matches a specific pattern and display errors
 function isAllowed(element, expression, message) {
-  const elements = element.value.trim();
+  const elementValue = element.value.trim();
 
-  if (!elements.match(expression) && elements !== '') {
-    element.nextElementSibling.style.display = 'block';
-    element.nextElementSibling.innerHTML = message;
-    element.style.backgroundColor = '#FF000015';
-    isValid = false;
+  if (!elementValue.match(expression) && elementValue !== '') {
+    showError(element, message);
   }
 }
 
 // Function to check if the date of birth is valid
-function isDateValid() {
-  const birth = new Date(dateOfBirth.value);
-  const birthYear = birth.getFullYear();
-  const current = new Date();
-  const currentYear = current.getFullYear();
-  const age = currentYear - birthYear;
-
-  if (dateOfBirth.value !== '') {
-    dateOfBirth.nextElementSibling.style.display = 'block';
-
-    if (age > 100 || age < 18 || isNaN(age) || !dateFormat(dateOfBirth.value) || dateOfBirth.value.includes('0000')) {
-      dateOfBirth.nextElementSibling.innerHTML = 'Age should be between 18 and 100';
-      dateOfBirth.style.backgroundColor = '#FF000015';
-      isValid = false;
-    }
-    if (!dateFormat(dateOfBirth.value)) {
-      dateOfBirth.nextElementSibling.innerHTML = 'Invalid format';
-      dateOfBirth.style.backgroundColor = '#FF000015';
-      isValid = false;
-    }
-  }
+function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// Function to check if date follows a specific format
-function dateFormat(dateString) {
-  const datePattern = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
+function isDateValid() {
+  const dateOfBirthValue = dateOfBirth.value;
+  const dateParts = dateOfBirthValue.split('/');
 
-  return datePattern.test(dateString);
+  if (dateParts.length !== 3) {
+    showError(dateOfBirth, 'Invalid format');
+    return;
+  }
+
+  const year = parseInt(dateParts[0], 10);
+  const month = parseInt(dateParts[1], 10);
+  const day = parseInt(dateParts[2], 10);
+
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    showError(dateOfBirth, 'Invalid format');
+    return;
+  }
+
+  if (year < 1900 || year > new Date().getFullYear() || month < 1 || month > 12 || day < 1 || day > 31) {
+    showError(dateOfBirth, 'Invalid date');
+    return;
+  }
+
+  if (month === 2) {
+    // February
+    const isLeap = isLeapYear(year);
+    if ((isLeap && day > 29) || (!isLeap && day > 28)) {
+      showError(dateOfBirth, 'Invalid date');
+      return;
+    }
+  } else if ([4, 6, 9, 11].includes(month) && day > 30) {
+    showError(dateOfBirth, 'Invalid date');
+    return;
+  }
+
+  const currentYear = new Date().getFullYear();
+  const age = currentYear - year;
+
+  if (age > 100 || age < 18) {
+    showError(dateOfBirth, 'Age should be between 18 and 100');
+    return;
+  }
 }
 
 // Function to check salary input
@@ -317,18 +311,12 @@ function checkSalary() {
   if (salary.value !== '') {
     if (!regEx.test(salary.value) || salary.value < 100) {
 
-      salary.style.backgroundColor = '#FF000015';
-
       if (!regEx.test(salary.value)) {
-        salary.nextElementSibling.innerHTML = 'Please Enter a Valid Number';
-        salary.nextElementSibling.style.display = 'block';
+        showError(salary, 'Please Enter a Valid Number');
+
       } else if (salary.value < 100) {
-        salary.nextElementSibling.innerHTML = 'Minimum amount should be 100';
-        salary.nextElementSibling.style.display = 'block';
+        showError(salary, 'Minimum amount should be 100');
       }
-      salary.value = ' ';
-      isValid = false;
-      return false;
     }
   }
 }
@@ -343,10 +331,7 @@ function checkStartEnd() {
     if (fieldValue !== '') {
       if (fieldValue.startsWith('-') || fieldValue.startsWith(',') ||
         fieldValue.endsWith('-') || fieldValue.endsWith(',')) {
-        field.nextElementSibling.style.display = 'block';
-        field.nextElementSibling.innerHTML = 'Input cannot start or end with symbols';
-        field.style.backgroundColor = '#FF000015';
-        isValid = false;
+        showError(field, 'Input cannot start or end with symbols');
       }
     }
   });
@@ -361,10 +346,7 @@ function checkRepeatingSymbols() {
     const fieldValue = field.value.trim();
 
     if (fieldValue !== '' && repeatingSymbolsRegex.test(fieldValue)) {
-      field.nextElementSibling.style.display = 'block';
-      field.nextElementSibling.innerHTML = 'Repeating symbols';
-      field.style.backgroundColor = '#FF000015';
-      isValid = false;
+      showError(field, 'Repeating Symbols');
     }
   });
 }
@@ -389,4 +371,12 @@ function callLengthHandler() {
   handleMaxInput(salary, 10);
   handleMaxInput(hobbies, 25);
   handleMaxInput(address, 100);
+}
+
+function showError(field, message) {
+  field.nextElementSibling.style.display = 'block';
+  field.nextElementSibling.innerHTML = message;
+  field.style.backgroundColor = '#FF000015';
+  isValid = false;
+  return false
 }
