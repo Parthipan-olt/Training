@@ -2,7 +2,7 @@
 
 // Selecting form input elements
 const fullName = document.querySelector('#fName');
-const radio = document.querySelectorAll('input[name="gender"]');
+const radioButton = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
 const socialSecurityNumber = document.querySelector('#socialSecurityNumber');
 const address = document.querySelector('#address');
@@ -34,6 +34,7 @@ document.addEventListener('submit', (e) => {
     e.preventDefault();
     return false;
   } else {
+    e.preventDefault();
     return true;
   }
 });
@@ -64,7 +65,7 @@ function resetField() {
     checkbox.checked = false;
   });
 
-  radio.forEach((radio) => {
+  radioButton.forEach((radio) => {
     radio.checked = false;
   });
 
@@ -145,16 +146,23 @@ function isEmpty(field) {
 
 // Function to check field length and display errors
 function checkLength(field, min, max) {
-  const fieldValue = field.value.trim();
+  let fieldValue;
+  
+  if (field === salary) {
+    fieldValue = toInteger(field);
+  } else {
+    fieldValue = field.value.trim();
+  }
+
   const inputLength = fieldValue.length;
 
   if (inputLength < min && inputLength !== 0) {
-    showError(field, `Minimum length is ${min}`);
+    showError(field, `Minimum length is ${min} & Maximum length is ${max}`);
   }
+}
 
-  if (inputLength > max) {
-    showError(field, `Maximum length is ${max}`);
-  }
+function toInteger(field) {
+  return parseInt(field.value);
 }
 
 // Function to check if at least one radio button is checked
@@ -163,7 +171,7 @@ function isRadioChecked() {
 
   let isAnyChecked = false;
 
-  radio.forEach((radio) => {
+  radioButton.forEach((radio) => {
     if (radio.checked) {
       isAnyChecked = true;
     }
@@ -308,7 +316,7 @@ function isDateValid() {
 function checkSalary() {
   const regEx = /^[0-9.]*$/;
 
-  if (salary.value !== '') {
+  if (salary.value !== '' && salary.value >= 100) {
     if (!regEx.test(salary.value) || salary.value < 100) {
 
       if (!regEx.test(salary.value)) {
