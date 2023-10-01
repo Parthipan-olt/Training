@@ -166,6 +166,10 @@ function checkLength(field, min, max) {
   }
 }
 
+function toInteger(field) {
+  return parseInt(field.value);
+}
+
 // Function to check if at least one radio button is checked
 function isRadioChecked() {
   const radioButtonError = document.querySelector('.span-select-error');
@@ -440,6 +444,3 @@ function Displayed() {
   }
 }
 
-function toInteger(field) {
-  return parseInt(field.value);
-}
