@@ -152,7 +152,7 @@ function isEmpty(field) {
 // Function to check field length and display errors
 function checkLength(field, min, max) {
   let fieldValue;
-  
+
   if (field === salary) {
     fieldValue = toInteger(field);
   } else {
@@ -396,8 +396,7 @@ function showError(field, message) {
 
 
 function saveData() {
-  if (displayed == false) {
-    console.log('saved')
+  if (!displayed) {
     const selectedRadioButton = document.querySelector('input[type="radio"]:checked');
 
     dataDisplay.style.display = 'block';
@@ -416,7 +415,7 @@ function saveData() {
       document.querySelector('#genderData').innerHTML = selectedRadioButton.value;
     }
 
-    document.querySelector('#fullNameData').innerHTML= fullName.value;
+    document.querySelector('#fullNameData').innerHTML = fullName.value;
     document.querySelector('#dateOfBirthData').innerHTML = dateOfBirth.value;
     document.querySelector('#socialSecurityNumberData').innerHTML = socialSecurityNumber.value;
     document.querySelector('#addressData').innerHTML = address.value;
@@ -430,17 +429,15 @@ function saveData() {
     document.querySelector('#notesData').innerHTML = notes.value;
 
     displayed = true;
-  }
+  } 
 }
 
 function Displayed() {
   if (displayed) {
     resetField();
-    dataDisplay.style.display = 'none !important';
+    alert('Invalid action')
+    dataDisplay.style.display = 'none'
     generateRandom();
-    alert('Invalid Action');
-    displayed = false;
-    return true;
+    return false
   }
 }
-
