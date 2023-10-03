@@ -1,6 +1,5 @@
 /* eslint-disable func-style */
-
-// Selecting form input elements
+const form = document.querySelector('#webForm');
 const fullName = document.querySelector('#fName');
 const radioButton = document.querySelectorAll('input[name="gender"]');
 const dateOfBirth = document.querySelector('#dateOfBirth');
@@ -15,31 +14,29 @@ const salary = document.querySelector('#salary');
 const hobbies = document.querySelector('#hobbies');
 const notes = document.querySelector('#notes');
 const select = document.querySelector('#dept');
+const dataDisplay = document.querySelector('#dataDisplay');
+const selectErrors = document.querySelectorAll('.span-select-error');
+let isValid = true;
+let displayed = false;
+const objArray = [];
+const data = [];
 const fields = [
   fullName, dateOfBirth, email, socialSecurityNumber, address,
   phoneNumber, jobTitle, salary, hobbies, notes
 ];
 
-const data = [];
-
-let isValid = true;
-let displayed = false;
-
 generateRandom();
-callLengthHandler();
-
+callLengthHandler(); // Limits the input length
 addEventListener('beforeinput', clearOnClick);
 
 // Add a submit event listener to the form
 document.addEventListener('submit', (e) => {
-
   if (!validate()) {
     e.preventDefault();
     return false;
   } else {
     e.preventDefault();
-    Displayed();
-    saveData();
+    save();
     return true;
   }
 });
@@ -51,8 +48,6 @@ function clearOnClick() {
     field.style.backgroundColor = '#fff';
   });
 
-  const selectErrors = document.querySelectorAll('.span-select-error');
-
   selectErrors.forEach((error) => {
     error.style.display = 'none';
   });
@@ -60,22 +55,14 @@ function clearOnClick() {
 
 // Function to reset all form fields
 function resetField() {
-  clearOnClick();
-
-  fields.forEach((field) => {
-    field.value = '';
-  });
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-  });
-
-  radioButton.forEach((radio) => {
-    radio.checked = false;
-  });
-
-  select.selectedIndex = 0;
-  isValid = true;
+  form.reset();
+  generateRandom();
+  dataDisplay.style.display = 'none';
+  displayed = false;
+  for (i = 0; i < data.length; i++) {
+    data[i] = ''
+  }
+  return;
 }
 
 // Function to validate the entire form
@@ -115,7 +102,9 @@ function salToDecimal() {
   const salaryValue = salary.value.trim();
   const salaryFormat = /^\d{1,10}(\.\d{0,2})?$/;
 
-  if (salaryValue !== '' && !isNaN(salary.value)) {
+  checkSalary();
+
+  if (salaryValue !== '' && !isNaN(salary.value) && checkSalary()) {
     const decimalSalary = parseFloat(salaryValue);
 
     if (!isNaN(decimalSalary)) {
@@ -124,9 +113,7 @@ function salToDecimal() {
     if (!salaryFormat.test(salaryValue)) {
       showError(salary, 'Please Enter a Valid Number');
     }
-
   }
-  checkSalary();
 }
 
 // Function to check field lengths
@@ -137,7 +124,6 @@ function isLength() {
   checkLength(email, 0, 50);
   checkLength(jobTitle, 3, 50);
   checkLength(hobbies, 3, 25);
-  checkLength(salary, 3, 10);
 }
 
 // Function to check if a field is empty and display errors
@@ -152,28 +138,19 @@ function isEmpty(field) {
 // Function to check field length and display errors
 function checkLength(field, min, max) {
   let fieldValue;
-
-  if (field === salary) {
-    fieldValue = toInteger(field);
-  } else {
-    fieldValue = field.value.trim();
-  }
-
+  fieldValue = field.value.toString();
   const inputLength = fieldValue.length;
 
   if (inputLength < min && inputLength !== 0) {
     showError(field, `Minimum length is ${min} & Maximum length is ${max}`);
+  } else {
+    return true
   }
-}
-
-function toInteger(field) {
-  return parseInt(field.value);
 }
 
 // Function to check if at least one radio button is checked
 function isRadioChecked() {
   const radioButtonError = document.querySelector('.span-select-error');
-
   let isAnyChecked = false;
 
   radioButton.forEach((radio) => {
@@ -192,7 +169,6 @@ function isRadioChecked() {
 // Function to check if at least one checkbox is checked
 function isCheckboxChecked() {
   const checkboxError = document.querySelectorAll('.span-select-error')[1];
-
   let isAnyChecked = false;
 
   checkboxes.forEach((checkbox) => {
@@ -276,61 +252,41 @@ function isLeapYear(year) {
 function isDateValid() {
   const dateOfBirthValue = dateOfBirth.value;
   const dateParts = dateOfBirthValue.split('/');
-
-  if (dateParts.length !== 3) {
-    showError(dateOfBirth, 'Invalid format');
-    return;
-  }
-
   const year = parseInt(dateParts[0], 10);
   const month = parseInt(dateParts[1], 10);
   const day = parseInt(dateParts[2], 10);
-
-  if (isNaN(year) || isNaN(month) || isNaN(day)) {
-    showError(dateOfBirth, 'Invalid format');
-    return;
-  }
-
-  if (year < 1900 || year > new Date().getFullYear() || month < 1 || month > 12 || day < 1 || day > 31) {
-    showError(dateOfBirth, 'Invalid date');
-    return;
-  }
-
-  if (month === 2) {
-    // February
-    const isLeap = isLeapYear(year);
-    if ((isLeap && day > 29) || (!isLeap && day > 28)) {
-      showError(dateOfBirth, 'Invalid date');
-      return;
-    }
-  } else if ([4, 6, 9, 11].includes(month) && day > 30) {
-    showError(dateOfBirth, 'Invalid date');
-    return;
-  }
-
+  const regexPattern = /^(?:\d{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])$/; // Date Pattern
   const currentYear = new Date().getFullYear();
   const age = currentYear - year;
 
-  if (age > 100 || age < 18) {
+  if (!regexPattern.test(dateOfBirthValue)) {
+    showError(dateOfBirth, 'Invalid format');
+  } else if (month === 2) {
+    const isLeap = isLeapYear(year);
+    if ((isLeap && day > 29) || (!isLeap && day > 28)) {
+      showError(dateOfBirth, 'Invalid date');
+    }
+  } else if ([4, 6, 9, 11].includes(month) && day > 30) {
+    showError(dateOfBirth, 'Invalid date');
+  } else if (age > 100 || age < 18) {
     showError(dateOfBirth, 'Age should be between 18 and 100');
-    return;
   }
 }
 
 // Function to check salary input
 function checkSalary() {
-  const regEx = /^[0-9.]*$/;
+  const regEx = /^[0-9]*(\.[0-9]+)?$/;
+  const isLengthValid = checkLength(salary, 3, 10);
 
-  if (salary.value !== '' && salary.value >= 100) {
-    if (!regEx.test(salary.value) || salary.value < 100) {
-
-      if (!regEx.test(salary.value)) {
-        showError(salary, 'Please Enter a Valid Number');
-
-      } else if (salary.value < 100) {
-        showError(salary, 'Minimum amount should be 100');
-      }
-    }
+  if (!isLengthValid) {
+    checkLength(salary, 3, 10);
+  } else if (parseFloat(salary.value) < 100 && isLengthValid) {
+    showError(salary, 'Minimum amount should be 100');
+  }
+  if (!regEx.test(salary.value)) {
+    showError(salary, 'Please Enter a Valid Number');
+  } else {
+    return true;
   }
 }
 
@@ -386,6 +342,8 @@ function callLengthHandler() {
   handleMaxInput(address, 100);
 }
 
+
+// Display errors
 function showError(field, message) {
   field.nextElementSibling.style.display = 'block';
   field.nextElementSibling.innerHTML = message;
@@ -394,50 +352,62 @@ function showError(field, message) {
   return false
 }
 
+function save() {
 
-function saveData() {
+  const selectedRadioButton = document.querySelector('input[type="radio"]:checked');
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      data[i] = checkboxes[i].value;
+    }
+  }
+  const resultCheckbox = data.join(' ');
+
   if (!displayed) {
-    const selectedRadioButton = document.querySelector('input[type="radio"]:checked');
 
-    dataDisplay.style.display = 'block';
-
-    for (let i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked) {
-
-        data[i] = checkboxes[i].value;
-        document.querySelector('#contactMethodData').innerHTML += `${data[i]} `;
-
-      }
-
+    var savedData = {
+      fullName: fullName.value,
+      gender: selectedRadioButton.value,
+      dateOfBirth: dateOfBirth.value,
+      socialSecurityNumber: socialSecurityNumber.value,
+      address: address.value,
+      phoneNumber: phoneNumber.value,
+      email: email.value,
+      contact: resultCheckbox,
+      eId: eId.value,
+      jobTitle: jobTitle.value,
+      department: select.value,
+      salary: salary.value,
+      hobbies: hobbies.value,
+      notes: notes.value
     }
-
-    if (selectedRadioButton) {
-      document.querySelector('#genderData').innerHTML = selectedRadioButton.value;
-    }
-
-    document.querySelector('#fullNameData').innerHTML = fullName.value;
-    document.querySelector('#dateOfBirthData').innerHTML = dateOfBirth.value;
-    document.querySelector('#socialSecurityNumberData').innerHTML = socialSecurityNumber.value;
-    document.querySelector('#addressData').innerHTML = address.value;
-    document.querySelector('#phoneData').innerHTML = phoneNumber.value;
-    document.querySelector('#emailData').innerHTML = email.value;
-    document.querySelector('#eIdData').innerHTML = eId.value;
-    document.querySelector('#jobTitleData').innerHTML = jobTitle.value;
-    document.querySelector('#departmentData').innerHTML = select.value;
-    document.querySelector('#salaryData').innerHTML = salary.value;
-    document.querySelector('#hobbiesData').innerHTML = hobbies.value;
-    document.querySelector('#notesData').innerHTML = notes.value;
-
-    displayed = true;
-  } 
+    objArray.push(savedData);
+    display();
+  }
 }
 
-function Displayed() {
-  if (displayed) {
-    resetField();
-    alert('Invalid action')
-    dataDisplay.style.display = 'none'
-    generateRandom();
-    return false
+function display(resultCheckbox) {
+  if (displayed === false) {
+
+    dataDisplay.style.display = 'block'
+
+    for (const key of objArray) {
+      document.querySelector('#fullNameData').innerHTML = key.fullName;
+      document.querySelector('#genderData').innerHTML = key.gender;
+      document.querySelector('#dateOfBirthData').innerHTML = key.dateOfBirth;
+      document.querySelector('#socialSecurityNumberData').innerHTML = key.socialSecurityNumber;
+      document.querySelector('#addressData').innerHTML = key.address;
+      document.querySelector('#phoneData').innerHTML = key.phoneNumber;
+      document.querySelector('#emailData').innerHTML = key.email;
+      document.querySelector('#contactMethodData').innerHTML = key.contact;
+      document.querySelector('#eIdData').innerHTML = key.eId;
+      document.querySelector('#jobTitleData').innerHTML = key.jobTitle;
+      document.querySelector('#departmentData').innerHTML = key.department;
+      document.querySelector('#salaryData').innerHTML = key.salary;
+      document.querySelector('#hobbiesData').innerHTML = key.hobbies;
+      document.querySelector('#notesData').innerHTML = key.notes;
+    }
+    displayed = true;
+  } else {
+    alert('Invalid Action');
   }
 }
