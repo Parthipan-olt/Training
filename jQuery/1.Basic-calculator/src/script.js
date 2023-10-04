@@ -28,7 +28,6 @@ $('#result').click(function () {
     expression += result;
     result = 0;
     pressedEqual = true;
-    return result;
 });
 
 // Event handler for the "Clear" button
@@ -42,6 +41,7 @@ $('#clrBtn').click(function () {
 // Function to handle operator input
 function getOperator(oprVal) {
     foundOperator = true;
+
     if (!pressedEqual) {
         lastChar = expression.charAt(expression.length - 1);
         pressedEqual = true;
@@ -61,6 +61,9 @@ function getOperator(oprVal) {
 
 // Function to handle number input and "."
 function getNumber(num) {
+    if (!foundOperator == true && pressedEqual == true) {
+        expression = 0
+    }
     if (num === '.') {
         count++;
     }
