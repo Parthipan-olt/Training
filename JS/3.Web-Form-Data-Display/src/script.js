@@ -385,7 +385,7 @@ function save() {
   }
 }
 
-function display(resultCheckbox) {
+function display() {
   if (displayed === false) {
 
     dataDisplay.style.display = 'block'
