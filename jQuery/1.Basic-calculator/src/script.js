@@ -41,7 +41,7 @@ $('#clrBtn').click(function () {
 // Function to handle operator input
 function getOperator(oprVal) {
     foundOperator = true;
-
+    count = 0;
     if (!pressedEqual) {
         lastChar = expression.charAt(expression.length - 1);
         pressedEqual = true;
@@ -67,9 +67,9 @@ function getNumber(num) {
     if (num === '.') {
         count++;
     }
-    if ((num === '.' && expression.toString().indexOf('.') !== -1) || count > 1) {
+    if (num === '.' &&  count > 1) {
         count = 1;
-        return;
+        return
     }
     inputNumber = num;
     displayNumber(inputNumber);
