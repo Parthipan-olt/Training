@@ -39,7 +39,8 @@ $('#webForm').validate({
             required: true,
             pattern: /^[0-9-]*$/,
             minlength: 7,
-            maxlength: 9
+            maxlength: 9,
+            isValidFormat: true
         },
         address: {
             required: true,
@@ -79,7 +80,7 @@ $('#webForm').validate({
         hobbies: {
             required: true,
             pattern: /^[a-zA-Z\s,-]*$/,
-           
+
             minlength: 3,
             maxlength: 25
         },
@@ -304,6 +305,11 @@ function generateRandomEmployeeId() {
     const randomId = Math.round(Math.random() * (10 - 1) + 1);
     $('#eId').val(randomId);
 }
+
+$.validator.addMethod('isValidFormat', function (value) {
+    return value.match(/\d{3}-\d{2}-\d{4}/);
+}, ' Use the format: XXX-XX-XXXX');
+
 
 // validate date format
 $.validator.addMethod('isValidDate', function (value) {
