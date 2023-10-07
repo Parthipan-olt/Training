@@ -12,7 +12,7 @@ $('#webForm').submit(function (e) {
     } else {
         e.preventDefault();
         $.validator.methods.convertSalaryToDecimal.call(this);
-        save();
+        saveEmployee();
         isCurrentlyEditing = false
     }
 });
