@@ -8,3 +8,5 @@
 ## jQuery Assignments
 
 * [Basic-Calculator-jQuery](https://parthipan-olt.github.io/Training/jQuery/1.Basic-calculator/src/index.html)
+
+ [Web-Form-jQuery](https://parthipan-olt.github.io/Training/jQuery/2.Web-form-table/src/index.html)
