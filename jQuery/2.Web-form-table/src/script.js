@@ -7,10 +7,14 @@ generateRandomEmployeeId();
 
 // Handle form submission
 $('#webForm').submit(function (e) {
-    e.preventDefault();
-    $.validator.methods.convertSalaryToDecimal.call(this);
-    saveEmployee();
-    isCurrentlyEditing = false;
+    if (!$('#webForm').valid()) {
+        return false
+    } else {
+        e.preventDefault();
+        $.validator.methods.convertSalaryToDecimal.call(this);
+        save();
+        isCurrentlyEditing = false
+    }
 });
 
 function saveEmployee() {
@@ -346,7 +350,7 @@ function updateEmployeeData(index, employee, row) {
     employee.hobbies = $('#hobbies').val();
     employee.notes = $('#notes').val();
     deleteEmployeeRow(row);
-   
+
 }
 
 // Delete an employee's row from the table
