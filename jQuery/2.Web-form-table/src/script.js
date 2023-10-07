@@ -308,7 +308,7 @@ function generateRandomEmployeeId() {
 
 $.validator.addMethod('isValidFormat', function (value) {
     return value.match(/\d{2}-\d{2}-\d{3}/);
-}, ' Use the format: XXX-XX-XXXX');
+}, ' Use the format: XX-XX-XXX');
 
 
 // validate date format
