@@ -17,32 +17,6 @@ $('#webForm').submit(function (e) {
     }
 });
 
-function saveEmployee() {
-    const employee = {
-        name: $('#fName').val(),
-        gender: $('input[name="gender"]:checked').val(),
-        dob: $('#dateOfBirth').val(),
-        socialSecurityNumber: $('#socialSecurityNumber').val(),
-        address: $('#address').val(),
-        phone: $('#phone').val(),
-        email: $('#mail').val(),
-        contacts: $('input[name="contacts[]"]:checked')
-            .map(function () {
-                return this.value;
-            })
-            .get(),
-        employeeId: $('#eId').val(),
-        jobTitle: $('#jobTitle').val(),
-        department: $('#dept').val(),
-        salary: $('#salary').val(),
-        hobbies: $('#hobbies').val(),
-        notes: $('#notes').val(),
-    };
-    employeeList.push(employee);
-    displayEmployeeRow(employee);
-    clearForm();
-}
-
 // Form validation rules and messages
 $('#webForm').validate({
 
@@ -180,6 +154,7 @@ $('#webForm').validate({
         }
     },
 
+    // error spans for non-text fields
     errorElement: 'span',
     errorPlacement: function (error, element) {
         if (element.attr('name') === 'gender') {
@@ -192,6 +167,124 @@ $('#webForm').validate({
     }
 });
 
+// Stores the form data in an object
+function saveEmployee() {
+    const employee = {
+        name: $('#fName').val(),
+        gender: $('input[name="gender"]:checked').val(),
+        dob: $('#dateOfBirth').val(),
+        socialSecurityNumber: $('#socialSecurityNumber').val(),
+        address: $('#address').val(),
+        phone: $('#phone').val(),
+        email: $('#mail').val(),
+        contacts: $('input[name="contacts[]"]:checked')
+            .map(function () {
+                return this.value;
+            })
+            .get(),
+        employeeId: $('#eId').val(),
+        jobTitle: $('#jobTitle').val(),
+        department: $('#dept').val(),
+        salary: $('#salary').val(),
+        hobbies: $('#hobbies').val(),
+        notes: $('#notes').val(),
+    };
+    employeeList.push(employee);
+    displayEmployeeRow(employee);
+    clearForm();
+}
+
+// Display an employee's data in a table row
+function displayEmployeeRow(employee) {
+    const newRow = $('<tr></tr>');
+    const editButton = $('<button>').text('Edit').addClass('edit bg-success');
+    const deleteButton = $('<button>').text('Delete').addClass('delete bg-danger');
+
+    for (const key in employee) {
+        if (employee.hasOwnProperty(key)) {
+            const cell = $('<td></td>');
+            cell.text(employee[key]);
+            newRow.append(cell);
+        }
+    }
+    const actionCell = $('<td></td>');
+    newRow.append(actionCell);
+    actionCell.append(editButton);
+    actionCell.append(deleteButton);
+    tableBody.append(newRow);
+    deleteButton.on('click', function () {
+        deleteEmployeeRow(newRow);
+    });
+
+    editButton.on('click', function () {
+        let rowIndex = tableBody.find('tr').index(newRow);
+        rowIndex = rowIndex - 1;
+        const deleteRow = $(this).closest('tr');
+        $('span.error').css('display', 'none');
+        populateForm(rowIndex, employee, deleteRow);
+    });
+}
+
+// Function to populate form fields with the data in selected row
+function populateForm(index, employee, row) {
+    if (index >= 0 && index < employeeList.length && !isCurrentlyEditing) {
+        $('#fName').val(employee.name);
+        $('input[name="gender"]').prop('checked', false);
+        $(`input[name="gender"][value="${employee.gender}"]`).prop('checked', true);
+        $('#dateOfBirth').val(employee.dob);
+        $('#socialSecurityNumber').val(employee.socialSecurityNumber);
+        $('#address').val(employee.address);
+        $('#phone').val(employee.phone);
+        $('#mail').val(employee.email);
+        $('input[name="contacts[]"]').prop('checked', false);
+        employee.contacts.forEach((contact) => {
+            $(`input[name="contacts[]"][value="${contact}"]`).prop('checked', true);
+        });
+        $('#eId').val(employee.employeeId);
+        $('#jobTitle').val(employee.jobTitle);
+        $('#dept').val(employee.department);
+        $('#salary').val(employee.salary);
+        $('#hobbies').val(employee.hobbies);
+        $('#notes').val(employee.notes);
+
+        updateEmployeeData(index, employee, row);
+        isCurrentlyEditing = true;
+    } else {
+        alert('Currenly Editing');
+    }
+}
+
+//Function to update edited data
+function updateEmployeeData(index, employee, row) {
+    employeeList[index] = employee;
+    employee.name = $('#fName').val();
+    employee.gender = $('input[name="gender"]:checked').val();
+    employee.dob = $('#dateOfBirth').val();
+    employee.socialSecurityNumber = $('#socialSecurityNumber').val();
+    employee.address = $('#address').val();
+    employee.phone = $('#phone').val();
+    employee.email = $('#mail').val();
+    employee.contacts = $('input[name="contacts[]"]:checked')
+        .map(function () {
+            return this.value;
+        })
+        .get();
+    employee.employeeId = $('#eId').val();
+    employee.jobTitle = $('#jobTitle').val();
+    employee.department = $('#dept').val();
+    employee.salary = $('#salary').val();
+    employee.hobbies = $('#hobbies').val();
+    employee.notes = $('#notes').val();
+    deleteEmployeeRow(row);
+
+}
+
+// Delete an employee's row from the table
+function deleteEmployeeRow(row) {
+    const index = tableBody.children().index(row);
+    employeeList.splice(index, 1);
+    row.remove();
+}
 
 // convert salary to decimal
 $.validator.addMethod('convertSalaryToDecimal', function (value) {
@@ -268,96 +361,6 @@ function calculateAge(dateString) {
         return age - 1;
     }
     return age;
-}
-
-// Display an employee's data in a table row
-function displayEmployeeRow(employee) {
-    const newRow = $('<tr></tr>');
-    const editButton = $('<button>').text('Edit').addClass('edit bg-success');
-    const deleteButton = $('<button>').text('Delete').addClass('delete bg-danger');
-
-    for (const key in employee) {
-        if (employee.hasOwnProperty(key)) {
-            const cell = $('<td></td>');
-            cell.text(employee[key]);
-            newRow.append(cell);
-        }
-    }
-    const actionCell = $('<td></td>');
-    newRow.append(actionCell);
-    actionCell.append(editButton);
-    actionCell.append(deleteButton);
-    tableBody.append(newRow);
-    deleteButton.on('click', function () {
-        deleteEmployeeRow(newRow);
-    });
-
-    editButton.on('click', function () {
-        let rowIndex = tableBody.find('tr').index(newRow);
-        rowIndex = rowIndex - 1;
-        const deleteRow = $(this).closest('tr');
-        $('span.error').css('display', 'none');
-        populateForm(rowIndex, employee, deleteRow);
-    });
-}
-
-function populateForm(index, employee, row) {
-    if (index >= 0 && index < employeeList.length && !isCurrentlyEditing) {
-        $('#fName').val(employee.name);
-        $('input[name="gender"]').prop('checked', false);
-        $(`input[name="gender"][value="${employee.gender}"]`).prop('checked', true);
-        $('#dateOfBirth').val(employee.dob);
-        $('#socialSecurityNumber').val(employee.socialSecurityNumber);
-        $('#address').val(employee.address);
-        $('#phone').val(employee.phone);
-        $('#mail').val(employee.email);
-        $('input[name="contacts[]"]').prop('checked', false);
-        employee.contacts.forEach((contact) => {
-            $(`input[name="contacts[]"][value="${contact}"]`).prop('checked', true);
-        });
-        $('#eId').val(employee.employeeId);
-        $('#jobTitle').val(employee.jobTitle);
-        $('#dept').val(employee.department);
-        $('#salary').val(employee.salary);
-        $('#hobbies').val(employee.hobbies);
-        $('#notes').val(employee.notes);
-
-        updateEmployeeData(index, employee, row);
-        isCurrentlyEditing = true;
-    } else {
-        alert('Currenly Editing');
-    }
-}
-
-function updateEmployeeData(index, employee, row) {
-    employeeList[index] = employee;
-    employee.name = $('#fName').val();
-    employee.gender = $('input[name="gender"]:checked').val();
-    employee.dob = $('#dateOfBirth').val();
-    employee.socialSecurityNumber = $('#socialSecurityNumber').val();
-    employee.address = $('#address').val();
-    employee.phone = $('#phone').val();
-    employee.email = $('#mail').val();
-    employee.contacts = $('input[name="contacts[]"]:checked')
-        .map(function () {
-            return this.value;
-        })
-        .get();
-    employee.employeeId = $('#eId').val();
-    employee.jobTitle = $('#jobTitle').val();
-    employee.department = $('#dept').val();
-    employee.salary = $('#salary').val();
-    employee.hobbies = $('#hobbies').val();
-    employee.notes = $('#notes').val();
-    deleteEmployeeRow(row);
-
-}
-
-// Delete an employee's row from the table
-function deleteEmployeeRow(row) {
-    const index = tableBody.children().index(row);
-    employeeList.splice(index, 1);
-    row.remove();
 }
 
 // Clear the form and generate a random employee ID
