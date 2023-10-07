@@ -39,15 +39,11 @@ $('#webForm').validate({
             required: true,
             pattern: /^[0-9-]*$/,
             minlength: 7,
-            noRepeatingSymbols: true,
-            doesNotStartOrEndWithSymbols: true,
             maxlength: 9
         },
         address: {
             required: true,
-            pattern: /^[a-zA-Z0-9\s,-]*$/,
-            doesNotStartOrEndWithSymbols: true,
-            noRepeatingSymbols: true,
+            pattern: /^[a-zA-Z0-9\s,-]*$/
         },
         phone: {
             required: true,
@@ -70,8 +66,6 @@ $('#webForm').validate({
         jobTitle: {
             required: true,
             pattern: /^[a-zA-Z\s,]*$/,
-            doesNotStartOrEndWithSymbols: true,
-            noRepeatingSymbols: true,
             minlength: 3,
             maxlength: 25
         },
@@ -85,15 +79,12 @@ $('#webForm').validate({
         hobbies: {
             required: true,
             pattern: /^[a-zA-Z\s,-]*$/,
-            doesNotStartOrEndWithSymbols: true,
-            noRepeatingSymbols: true,
+           
             minlength: 3,
             maxlength: 25
         },
         notes: {
-            pattern: /^[a-zA-Z0-9\s,.]*$/,
-            doesNotStartOrEndWithSymbols: true,
-            noRepeatingSymbols: true
+            pattern: /^[a-zA-Z0-9\s,.]*$/
         }
     },
     messages: {
@@ -338,19 +329,6 @@ $.validator.addMethod('isAgeValid', function (value) {
     return age >= 18 && age <= 100;
 });
 
-// check if a string start or end with symbols
-$.validator.addMethod('doesNotStartOrEndWithSymbols', function (value) {
-    const trimmedValue = value.trim();
-    const regex = /^[-,].*|.*[-,]$/;
-    return !regex.test(trimmedValue);
-}, 'Cannot start or end with this symbol');
-
-// check for repeating symbols
-$.validator.addMethod('noRepeatingSymbols', function (value) {
-    const repeatingSymbolsRegex = /([^\w\s])\1+/;
-    const trimmedValue = value.trim();
-    return !repeatingSymbolsRegex.test(trimmedValue);
-}, 'Cannot Repeat this symbol');
 
 // Calculate age from the date string
 function calculateAge(dateString) {
