@@ -1,0 +1,17 @@
+<% if (data.total_results > 0) { %>
+
+<div class=" results-container container">
+    <p class="mt-3 mb-0 pl-4 ml-5">Showing results for "<%= searchQuery %>"</p>
+    <p class="close-x">&#x2715</p>
+    
+    <div class="search-results">
+        <% for(const movie of data.results){ %>
+        <%- include('moviedata', { data: movie }) %>
+        <% } %>
+
+    </div>
+
+    <div class="page-buttons-container">
+</div>
+
+<% } %>

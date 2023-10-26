@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('head') %>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="background-image "><img src="images/37945.jpg" alt="image">
+        <div class="container-fluid p-0">
+            <div class="content">
+                <div class="header-contents align-items-baseline mb-5 pt-2">
+                    <div class="ml-3">
+                        <h2>Movie</h2>
+                    </div>
+                    <div id="search-content">
+                        <div class="mx-5">
+                            <select name="genre" id="genre">
+                                <option value="" selected disabled>Genres</option>
+                                <option value="12">Adventure</option>
+                                <option value="16">Animation</option>
+                                <option value="80">Crime</option>
+                                <option value="99">Documentary</option>
+                                <option value="10751">Family</option>
+                                <option value="14">Fantasy</option>
+                                <option value="36">History</option>
+                                <option value="9648">Mystery</option>
+                                <option value="878">Sci-Fi</option>
+                                <option value="53">Thriller</option>
+                                <option value="37">Western</option>
+                            </select>
+                        </div>
+                        <div class="mx-5">
+                            <form action="/get-movie-results/:id/:page" method="post">
+
+                                <input type="text" name="searchBox" class="px-2 py-1 mt-2" id="searchBox">
+                                <button type="submit" class="btn"> <i class="fa fa-search search-icon"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-container container">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="about-application ">
+        <h3 class="text-center"><strong>Discover Your next cinematic adventure with our movie search
+                application!</strong></h3>
+        <p>Are you in the mood for thrilling action, heartwarming romance, mindobending sci-fi, or perhaps a good
+            old-fasioned comedy? Look no futher ! Our movie search application is your ultimate movie compainion,
+            designed to help you find the perfect film for every mood and occasion.Movie Buff is not just a movie search
+            application; it's a complete movie lover's ecosystem. Whether you're a fan of action, romance, sci-fi, or
+            indie films, Movie Buff empowers you to explore the world of cinema like never before. Discover, share, and
+            experience the magic of movies with Movie Buff today. Your next movie adventure is just a search away!
+        </p>
+        <hr>
+        <div class="application-descriptions">
+            <div class="powerful-sort mr-4">
+                <h4 id="powerfulSortHeading" class="text-center"><strong>Powerful Sort</strong></h4>
+                <div class="powerful-sort-content">
+                    <p>Sort your search results by factors like popularity, release date, or user ratings, helping you
+                        find the perfect movie that suits your current mood and preferences</p>
+                </div>
+            </div>
+            <div class="movie-details mr-3">
+                <h4 id="movieDetailsHeading" class="text-center"><strong>Movie Details</strong></h4>
+                <div class="movie-details-content">
+                    <p>Unlock the Magic of Cinema with a Single Click! Discover Movie Details Instantly. Say goodbye to
+                        the hassle of searching for movie information. Just click on the title, and embark on a
+                        cinematic journey.The power of knowledge is just a click away!"</p>
+                </div>
+            </div>
+            <div class="Search">
+                <h4 id="searchheading" class="text-center"><strong>Search</strong></h4>
+                <div class="search-content p-0">
+                    <p>Just put the movie name and click the search button, and that's how you can find the movie with
+                        our application.You can find all movies similar as your movie name.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

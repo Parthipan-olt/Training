@@ -1,0 +1,8 @@
+<% if ( data.poster_path) { %>
+<div class="results-container-two container">
+    <a href="detail.html?id=<%= data.id %>">
+        <img data-movie-id="<%= data.id %>" class="movie-image"
+            src="<%='http://image.tmdb.org/t/p/w154/' + data.poster_path %>" class="movie-title"
+            data-movie-id="<%= data.id %>"><p><%= data.title %></p>
+    </a></div>
+<% } %>
