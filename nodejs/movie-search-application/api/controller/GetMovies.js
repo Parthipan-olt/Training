@@ -48,7 +48,6 @@ const redirectToDetails = async (req, res) => {
             });
         } else {
             res.json(data);
-    console.log('blaaa')
         }
     });
 }
