@@ -153,7 +153,7 @@ function createResults(data) {
                 image = 'images/ihcoaih.jpeg'
             }
 
-            // display the movie and title
+            // display the movie poster and title
             const results = `<div class="results-container-two container">
                     <img class="movie-detail" 
                     title="${movie.title}" src="${image}" alt="image"
