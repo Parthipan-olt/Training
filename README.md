@@ -11,3 +11,7 @@
 
 * [Web-Form-jQuery](https://parthipan-olt.github.io/Training/jQuery/2.Web-form-table/src/index.html)
 * [Data-table-jquery](https://parthipan-olt.github.io/Training/jQuery/3.Data-table/src/index.html)
+
+## NodeJs Assignments
+
+* [Movie-Search-Application](https://parthipan-olt.github.io/Training/node-training/movie-search-application/views/index.ejs)
