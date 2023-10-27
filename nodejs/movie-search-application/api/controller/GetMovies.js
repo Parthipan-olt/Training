@@ -39,7 +39,6 @@ const searchGenre = async (req, res) => {
 }
 const redirectToDetails = async (req, res) => {
     const movieId = req.params.id;
-    res.redirect('www.google.com')
     const url = `https://api.themoviedb.org/3/movie/${movieId}?&api_key=b31738b39a9616ae7b1e0f4528fb1985`
     service.getApi(url, (error, data) => {
         if (error) {
